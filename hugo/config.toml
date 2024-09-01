@@ -1,0 +1,38 @@
+baseURL = 'https://www.calebolson.media'
+languageCode = 'en-us'
+theme = "nightfall"
+
+[menu]
+  [[menu.header]]
+    name = "blog"
+    weight = 0
+    url = "blog"
+  [[menu.header]]
+    name = "resume"
+    weight = 1
+    url = "resume"
+
+[params]
+author = "Caleb Olson"
+user = "caleb"
+hostname = "gohugo.io"
+title = "calebolson.media"
+field = "Engineer"
+
+readingTime = true  # Show reading time on post page
+published = true  # Show published data on post page
+
+[[params.social]]
+key = 0
+name = "github"
+url = "https://github.com/calscoo"
+
+[[params.social]]
+key = 2
+name = "linkedin"
+url = "https://www.linkedin.com/in/calebolson-engineer/"
+
+[[params.social]]
+key = 3
+name = "email"
+url = "mailto:scoutscott13@gmail.com"
