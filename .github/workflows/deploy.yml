@@ -1,4 +1,4 @@
-name: Portfolio Wesbite Terraform
+name: Gallery Wesbite Terraform
 
 on:
   workflow_dispatch:

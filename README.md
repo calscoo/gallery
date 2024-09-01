@@ -1,6 +1,6 @@
-# Portfolio
+# Gallery
 
-This Terraform/Hugo/GHA stack creates an AWS Amplify app for a portfolio website, with a main branch and a webhook. GHA stands it up with manually triggered Actions and changes to the main branch trigger deployments via Amplify to the deployed Hugo application
+This Terraform/Hugo/GHA stack creates an AWS Amplify app for a gallery website, with a main branch and a webhook. GHA stands it up with manually triggered Actions and changes to the main branch trigger deployments via Amplify to the deployed Hugo application
 
 ## Resources Created
 
