@@ -1,4 +1,3 @@
-copyright = "© Caleb Olson"
 defaultContentLanguage = "en"
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true

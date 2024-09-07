@@ -1,11 +1,12 @@
 <footer>
   {{ partialCached "social-icons.html" . }}
   <section>
-    {{ .Site.Copyright }}
+    © {{ now.Format "2006" }} {{ .Site.Params.author.name }} - Hugo-built, Amplify-deployed, Terraform-provisioned on
+    AWS.
     {{ range .Site.Menus.footer }}
-      <a {{ with .Params.rel -}}rel="{{ . }}"{{ end -}} href="{{ .URL }}">
-        {{ .Name }}
-      </a>
+    <a {{ with .Params.rel -}}rel="{{ . }}" {{ end -}} href="{{ .URL }}">
+      {{ .Name }}
+    </a>
     {{ end }}
   </section>
 </footer>
