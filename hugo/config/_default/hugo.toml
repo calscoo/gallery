@@ -1,4 +1,4 @@
-copyright = "© Your Name"
+copyright = "© Caleb Olson"
 defaultContentLanguage = "en"
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
@@ -13,14 +13,14 @@ theme = "gallery"
   description = "Example site for hugo-theme-gallery"
   title = "My Gallery"
   [params.author]
-    email = "user@example.com"
-    name = "Your Name"
+    email = "calebolson.media@gmail.com"
+    name = "Caleb Olson"
   [params.socialIcons]
-    facebook = "https://www.facebook.com/"
-    instagram = "https://www.instagram.com/"
-    github = "https://github.com/nicokaiser/hugo-theme-gallery/"
-    youtube = "https://www.youtube.com/"
-    email = "mailto:user@example.com"
+    #facebook = "https://www.facebook.com/"
+    instagram = "https://www.instagram.com/calebolson.media"
+    #github = "https://github.com/nicokaiser/hugo-theme-gallery/"
+    #youtube = "https://www.youtube.com/"
+    email = "mailto:calebolson.media@gmail.com"
     #website = "https://example.com"
     #mastodon = "https://example.com"
     #pixelfed = "https://example.com"
@@ -44,9 +44,9 @@ theme = "gallery"
 
 [menu]
   [[menu.footer]]
-    name = "GitHub"
-    url = "https://github.com/nicokaiser/hugo-theme-gallery/"
-    weight = 3
+    #name = "GitHub"
+    #url = "https://github.com/nicokaiser/hugo-theme-gallery/"
+    #weight = 3
 
 [services]
   [services.rss]
