@@ -1,8 +1,11 @@
 {{ if .Title }}
-  <hgroup>
-    <h1>{{ .Title }}</h1>
-    {{ with .Params.Description }}
-      <p>{{ . }}</p>
-    {{ end }}
-  </hgroup>
+<hgroup>
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.Intro }}
+  <h3>{{ . }}</h3>
+  {{ end }}
+  {{ with .Params.Description }}
+  <p>{{ . }}</p>
+  {{ end }}
+</hgroup>
 {{ end }}

@@ -1,7 +1,8 @@
 ---
-description: An example site for hugo-theme-gallery. Images from Unsplash.
+# intro: Optional Intro Message
+description: Welcome to my visual odyssey! I'm a photographer and digital artist creating unique works that challenge perception and ignite imagination.
 #lastmod: 2023-07-05
-title: Hugo Gallery
+title: calebolson.media
 featured_image: martin-martz-wRuhOOaG-Z4-unsplash.jpg # default: first image in this directory
 # featured_image on the home page is used for OpenGraph cards, etc.
 menus:

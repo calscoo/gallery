@@ -6,5 +6,5 @@ title: Fashion & Beauty
 weight: 2
 featured_image: mina-rad-V94CguEmeos-unsplash.jpg
 params:
-  theme: light
+  theme: dark
 ---
