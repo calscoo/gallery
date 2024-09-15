@@ -1,6 +1,22 @@
 {{ define "main" }}
-  {{ partial "title.html" . }}
-  <section class="prose">
-    {{ .Content }}
+{{ partial "title.html" . }}
+<!-- Check if the current page is the about page -->
+{{ if eq .RelPermalink "/about/" }}
+<!-- <section class="prose">
+  <img src="/images/caleb.jpg" alt="Caleb Olson" class="fixed-rounded-image" />
+</section> -->
+<section class="prose">
+  <section class="image-slider">
+    <!-- Image container -->
+    <img id="slider-image" src="/images/caleb.jpg" alt="Caleb Olson" class="fixed-rounded-image" />
+
+    <!-- Left and right arrow buttons -->
+    <button id="prev-arrow" class="arrow-button">❮</button>
+    <button id="next-arrow" class="arrow-button">❯</button>
   </section>
+</section>
+{{ end }}
+<section class="prose">
+  {{ .Content }}
+</section>
 {{ end }}
