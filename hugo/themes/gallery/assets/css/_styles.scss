@@ -13,7 +13,7 @@ body {
   color: var(--text-1);
 }
 
-body > header {
+body>header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,16 +26,19 @@ body > header {
   }
 
   .btn {
-    display: inline-flex;
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
     padding-right: 1rem;
     padding-left: 1rem;
-    height: 3rem;
     font-weight: 600;
     font-size: 1.25rem;
     user-select: none;
+    display: inline-flex;
+    width: 93px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
   }
 
   .btn-square {
