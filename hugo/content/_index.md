@@ -7,7 +7,7 @@ featured_image: martin-martz-wRuhOOaG-Z4-unsplash.jpg # default: first image in 
 # featured_image on the home page is used for OpenGraph cards, etc.
 menus:
   main:
-    name: Home
+    name: home
     weight: -1
 # sub-galleries on list pages are sorted by date and weight (descending)
 ---
