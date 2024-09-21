@@ -1,10 +1,10 @@
 ---
-description: Real images of space phenomena captured via long exposure — more commonly known as 'astrophotography'.
+description: Real images of space phenomena captured via long exposure.
 featured_image: northern-lights.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc
-title: astro
+title: astrophotography
 #type: gallery
 weight: 3
 params:
