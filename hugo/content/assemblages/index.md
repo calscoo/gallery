@@ -1,6 +1,6 @@
 ---
 description: Unique assembledges comprised of various assets all captured or created by yours truly.
-featured_image: titanshell.jpg
+featured_image: DSC03035.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc

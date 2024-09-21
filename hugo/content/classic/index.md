@@ -1,6 +1,6 @@
 ---
 description: Stand alone images representing a more classic style of photography.
-featured_image: ignorance.jpg
+featured_image: DSC03001.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc
