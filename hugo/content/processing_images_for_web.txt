@@ -4,3 +4,8 @@
 4. Use Open Images
 5. Quality 8
 6. 2000 x 2500
+
+1. Open Photopea
+2. File > Automate > Resize Images
+3. Quality 8
+4. No wider/taller than 2500 pixels
