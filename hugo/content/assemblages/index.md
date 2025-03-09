@@ -1,6 +1,6 @@
 ---
 description: Unique assembledges comprised of various assets all captured or created by yours truly.
-featured_image: DSC03035.jpg
+featured_image: phoenix_resort_wa_evergreens_fog.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc
