@@ -1,5 +1,5 @@
 ---
-description: Stand alone images representing a more classic style of photography.
+description: Stand alone pieces representing a more classic style of photography.
 featured_image: DSC03001.jpg
 menus: "main"
 sort_by: Name # Exif.Date
