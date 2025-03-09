@@ -1,5 +1,5 @@
 ---
-description: Pieces created leveraging datamosh/databend techniques.
+description: Pieces created leveraging datamoshing/databending techniques.
 featured_image: chandelier-assemblage-pitch-3-percent.jpg
 menus: "main"
 sort_by: Name # Exif.Date
