@@ -70,3 +70,18 @@
     padding-left: 1rem;
   }
 }
+
+/* Disable right-click and selection on images */
+.gallery img, 
+.pswp img {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Disable right-click on gallery items */
+.gallery-item {
+  -webkit-user-drag: none;
+}
