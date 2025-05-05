@@ -1,4 +1,3 @@
-
 resource "aws_amplify_app" "gallery" {
   name       = "gallery"
   repository = "https://github.com/calscoo/gallery"
@@ -35,7 +34,7 @@ applications:
   environment_variables = {
     AMPLIFY_DIFF_DEPLOY       = "false"
     AMPLIFY_MONOREPO_APP_ROOT = "hugo"
-    _LIVE_UPDATES             = "[{\"name\":\"Hugo\",\"pkg\":\"hugo\",\"type\":\"hugo\",\"version\":\"latest\"}]"
+    _LIVE_UPDATES             = "[{\"name\":\"Hugo\",\"pkg\":\"hugo\",\"type\":\"hugo\",\"version\":\"0.145\"}]"
   }
 }
 
