@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Define the images
     const images = [
         '/images/caleb.jpg',
-        '/images/caleb2.jpg' // Add your second image here
+        '/images/caleb2.jpg',
+        '/images/caleb3.jpg'
     ];
     let currentImageIndex = 0;
 
