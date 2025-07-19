@@ -1,6 +1,6 @@
 ---
 description: Stand alone pieces representing a more classic style of photography.
-featured_image: 014_DSCF2288.jpg
+featured_image: 035_DSCF2729.JPG
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc

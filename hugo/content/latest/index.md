@@ -1,6 +1,6 @@
 ---
 date: 2023-01-12
-featured_image: 009_DSCF2540.jpg
+featured_image: 010_DSCF2825.JPG
 sort_by: Name # Exif.Date
 sort_order: desc
 title: latest
