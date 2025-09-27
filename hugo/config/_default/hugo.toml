@@ -30,8 +30,8 @@ theme = "gallery"
   section = ["HTML"]
 
 [imaging]
-  quality = 75
-  resampleFilter = "CatmullRom"
+#  quality = 75
+#  resampleFilter = "CatmullRom"
   [imaging.exif]
     disableDate = false
     disableLatLong = true
