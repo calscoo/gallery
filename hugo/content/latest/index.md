@@ -1,6 +1,6 @@
 ---
 date: 2023-01-12
-featured_image: 010_DSCF3170.JPG
+featured_image: 017_satsop.jpg
 sort_by: Name # Exif.Date
 sort_order: desc
 title: latest
