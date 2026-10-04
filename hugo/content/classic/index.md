@@ -1,5 +1,6 @@
 ---
 description: Stand alone pieces representing a more classic style of photography.
+medium: Photograph
 featured_image: 057_DSCF4601.jpg
 menus: "main"
 sort_by: Name # Exif.Date

@@ -1,5 +1,6 @@
 ---
 description: Real images of space phenomena captured via long exposure.
+medium: Long exposure photograph
 featured_image: 005_northern-lights.jpg
 menus: "main"
 sort_by: Name # Exif.Date

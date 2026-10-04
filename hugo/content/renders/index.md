@@ -1,5 +1,6 @@
 ---
 description: Oddities I've crafted from scratch using Blender, often for the purpose of using in an assembledge.
+medium: Blender render
 featured_image: 009_procedural_planet_2.jpg
 menus: "main"
 sort_by: Name # Exif.Date
