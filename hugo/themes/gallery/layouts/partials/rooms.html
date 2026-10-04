@@ -1,0 +1,9 @@
+{{- /* Rooms in walking order: the featured album first, then every public album that has images. */ -}}
+{{- $rooms := slice -}}
+{{- range where site.RegularPages.ByDate.Reverse "Params.featured" true | first 1 -}}
+  {{- if .Resources.ByType "image" }}{{ $rooms = $rooms | append . }}{{ end -}}
+{{- end -}}
+{{- range where site.Home.Pages "Params.private" "ne" true -}}
+  {{- if .Resources.ByType "image" }}{{ $rooms = $rooms | append . }}{{ end -}}
+{{- end -}}
+{{- return $rooms -}}

@@ -1,0 +1,32 @@
+{{- /*
+  Everything the wall needs to know about one image.
+  Takes (dict "image" $img "page" $album). Returns a dict with the processed copies and the label text.
+  Title order: front matter title, then EXIF ImageDescription, then the file name.
+  Camera file names (DSCF4601, DJI_0028) become "Untitled (DSCF4601)".
+*/ -}}
+{{- $img := .image -}}
+{{- $base := path.BaseName $img.Name -}}
+{{- $rest := replaceRE `^\d+_` "" $base -}}
+{{- $no := 0 -}}
+{{- with findRESubmatch `^(\d+)_` $base 1 }}{{ $no = (index (index . 0) 1) | strings.TrimLeft "0" | default "0" | int }}{{ end -}}
+{{- $title := "" -}}
+{{- with $img.Exif }}{{ with .Tags.ImageDescription }}{{ $title = . }}{{ end }}{{ end -}}
+{{- if ne $img.Title $img.Name }}{{ $title = $img.Title }}{{ end -}}
+{{- if not $title -}}
+  {{- if findRE `(?i)^(dscf?|dsc|dji|cso|img|raw_photo|pxl)[_\d]` $rest -}}
+    {{- $title = printf "Untitled (%s)" (upper $rest) -}}
+  {{- else -}}
+    {{- $title = replaceRE `[-_]+` " " $rest -}}
+  {{- end -}}
+{{- end -}}
+{{- /* Decode the original once: the wall copy is made from the 1600px copy. */ -}}
+{{- $full := $img.Filter (slice images.AutoOrient (images.Process "fit 1600x1600 q85")) -}}
+{{- $wall := $full.Process "fit 1000x1000 q85" -}}
+{{- return dict
+  "title" $title
+  "slug" ($rest | lower | urlize)
+  "no" $no
+  "wall" $wall
+  "full" $full
+  "color" (index $wall.Colors 0 | default "#d8d8d4")
+-}}

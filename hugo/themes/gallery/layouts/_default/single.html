@@ -1,5 +1,56 @@
+{{ define "bodyclass" }}room-page{{ end }}
 {{ define "main" }}
-  {{ partial "title.html" . }}
-  {{ partial "gallery.html" . }}
-  {{ partial "related.html" . }}
+  {{ $rooms := partialCached "rooms.html" . "rooms" }}
+  {{ $next := "" }}
+  {{ range $i, $r := $rooms }}{{ if eq $r.RelPermalink $.RelPermalink }}{{ $next = index $rooms (mod (add $i 1) (len $rooms)) }}{{ end }}{{ end }}
+
+  {{ $images := slice }}
+  {{ range $img := .Resources.ByType "image" }}
+    {{ $date := "" }}{{ with $img.Exif }}{{ $date = .Date }}{{ end }}
+    {{ $images = $images | append (dict "Name" $img.Name "Title" $img.Title "Date" $date "image" $img) }}
+  {{ end }}
+  {{ $images = sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
+
+  <section class="room" id="room" tabindex="0" aria-label="{{ .Title }}, {{ len $images }} works"
+    data-medium="{{ .Params.medium }}" data-room="{{ .Title }}" data-email="{{ site.Params.author.email }}"
+    {{ with $next }}data-next="{{ .RelPermalink }}"{{ end }}>
+    <div class="track">
+      <header class="intro">
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+        <p class="hint">{{ len $images }} works.
+          <span class="hint-h">Scroll or drag to move along the wall.</span>
+          <span class="hint-t">Swipe to move along the wall.</span>
+          <span class="hint-v">Scroll down the wall.</span>
+          Select a piece to look closer.</p>
+      </header>
+      <div class="pieces" id="pieces">
+        {{ range $images }}
+          {{ $p := partial "piece.html" (dict "image" .image "page" $) }}
+          <a class="frame" href="{{ $p.full.RelPermalink }}" draggable="false"
+            data-slug="{{ $p.slug }}" data-title="{{ $p.title }}" data-no="{{ $p.no }}"
+            data-full="{{ $p.full.RelPermalink }}" data-fw="{{ $p.full.Width }}" data-fh="{{ $p.full.Height }}">
+            <img src="{{ $p.wall.RelPermalink }}" width="{{ $p.wall.Width }}" height="{{ $p.wall.Height }}" alt="{{ $p.title }}" loading="lazy" decoding="async" style="background-color: {{ $p.color }}" />
+          </a>
+        {{ end }}
+      </div>
+      {{ with $next }}
+        <footer class="exit"><a href="{{ .RelPermalink }}"><small>Next room</small>{{ .Title }}</a></footer>
+      {{ end }}
+    </div>
+  </section>
+  <div class="floor" aria-hidden="true"></div>
+  <div class="room-ui">
+    <div class="rail" id="rail" aria-hidden="true"><i></i></div>
+    <div class="status"><span id="count" aria-live="polite"></span><div class="walk-slot" id="walk-slot"></div></div>
+  </div>
+  <div class="closer" id="closer" hidden role="dialog" aria-modal="true" aria-label="Closer look">
+    <nav>
+      <button type="button" data-act="prev">Previous</button>
+      <button type="button" data-act="next">Next</button>
+      <button type="button" data-act="close">Back to the wall</button>
+    </nav>
+    <button type="button" class="frame" data-act="close" aria-label="Back to the wall"><img alt="" /></button>
+    <div class="card"></div>
+  </div>
 {{ end }}

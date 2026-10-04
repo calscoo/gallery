@@ -1,0 +1,8 @@
+{{- /* One framed piece with its label beside it. Takes (dict "image" $img "page" $album). Links to the piece in its room. */ -}}
+{{- $p := partial "piece.html" (dict "image" .image "page" .page) -}}
+<figure class="hung" data-hung>
+  <a class="frame" href="{{ .page.RelPermalink }}#{{ $p.slug }}" draggable="false">
+    <img src="{{ $p.wall.RelPermalink }}" width="{{ $p.wall.Width }}" height="{{ $p.wall.Height }}" alt="{{ $p.title }}" style="background-color: {{ $p.color }}" />
+  </a>
+  <figcaption class="card">{{ partial "card.html" (dict "piece" $p "page" .page) }}</figcaption>
+</figure>

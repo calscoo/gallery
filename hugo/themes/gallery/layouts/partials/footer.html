@@ -1,12 +1,7 @@
-<footer>
-  {{ partialCached "social-icons.html" . }}
-  <section>
-    © {{ now.Format "2006" }} {{ .Site.Params.author.name }} - Hugo-built, Amplify-deployed, Terraform-provisioned on
-    AWS.
-    {{ range .Site.Menus.footer }}
-    <a {{ with .Params.rel -}}rel="{{ . }}" {{ end -}} href="{{ .URL }}">
-      {{ .Name }}
-    </a>
-    {{ end }}
-  </section>
+<footer class="foot">
+  <span>© {{ now.Format "2006" }} {{ site.Params.author.name }}. Hugo-built, Amplify-deployed, Terraform-provisioned on AWS.</span>
+  <span>
+    {{- with site.Params.socialIcons.instagram }}<a href="{{ . }}" target="_blank" rel="noopener">Instagram</a>{{ end }}
+    {{- with site.Params.author.email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end -}}
+  </span>
 </footer>

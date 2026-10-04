@@ -1,0 +1,8 @@
+{{- /* Wall label. Takes (dict "piece" $piece "page" $album). */ -}}
+{{- $p := .piece -}}
+<h3>{{ $p.title }}</h3>
+{{- with .page.Params.medium }}{{ . }}<br>{{ end -}}
+No. {{ $p.no }}, {{ .page.Title }}<br>
+{{- with site.Params.author.email }}
+<a href="mailto:{{ . }}?subject={{ printf "Print: %s (%s, No. %d)" $p.title $.page.Title $p.no | urlquery }}">Ask about a print</a>
+{{- end -}}

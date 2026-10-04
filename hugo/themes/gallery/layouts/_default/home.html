@@ -1,9 +1,32 @@
+{{ define "bodyclass" }}home{{ end }}
 {{ define "main" }}
-  {{ partial "title.html" . }}
-  {{ partial "featured.html" . }}
-  <section class="galleries">
-    {{ range where .Pages "Params.private" "ne" true }}
-      {{ partial "album-card.html" . }}
+  {{ $rooms := partialCached "rooms.html" . "rooms" }}
+  <section class="entrance">
+    <div>
+      <h1>{{ replace (site.Params.author.name | default .Title) " " "<br>" | safeHTML }}</h1>
+      {{ with .Params.intro }}<p class="lead">{{ . }}</p>{{ end }}
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </div>
+    {{ with index $rooms 0 }}
+      {{ $room := . }}
+      {{ with partial "featured-image.html" $room }}{{ partial "hung.html" (dict "image" . "page" $room) }}{{ end }}
     {{ end }}
+  </section>
+  <section class="directory" id="rooms">
+    <div class="plaque">
+      <h2>Rooms</h2>
+      <ol>
+        {{ range $i, $room := $rooms }}
+          <li><a href="{{ .RelPermalink }}" data-room="{{ $i }}">{{ .Title }}<span>{{ len (.Resources.ByType "image") }} works</span></a></li>
+        {{ end }}
+      </ol>
+    </div>
+    <div class="preview" id="preview">
+      {{ range $i, $room := $rooms }}
+        {{ with partial "featured-image.html" $room }}
+          <template data-room="{{ $i }}">{{ partial "hung.html" (dict "image" . "page" $room) }}</template>
+        {{ end }}
+      {{ end }}
+    </div>
   </section>
 {{ end }}

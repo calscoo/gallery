@@ -1,8 +1,12 @@
 {{ define "main" }}
   {{ partial "title.html" . }}
-  <section class="galleries">
-    {{ range where .Pages "Params.private" "ne" true }}
-      {{ partial "album-card.html" . }}
-    {{ end }}
+  <section class="directory">
+    <div class="plaque">
+      <ol>
+        {{ range where .Pages "Params.private" "ne" true }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}<span>{{ len (.Resources.ByType "image") }} works</span></a></li>
+        {{ end }}
+      </ol>
+    </div>
   </section>
 {{ end }}
