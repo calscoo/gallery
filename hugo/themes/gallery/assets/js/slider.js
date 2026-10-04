@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageElement = document.getElementById('slider-image');
     const prevArrow = document.getElementById('prev-arrow');
     const nextArrow = document.getElementById('next-arrow');
+    if (!imageElement || !prevArrow || !nextArrow) return;
 
     // Function to update the image
     function updateImage(index) {

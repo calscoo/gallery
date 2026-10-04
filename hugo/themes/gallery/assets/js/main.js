@@ -1,24 +1,14 @@
-import "./menu.js";
-import "./gallery.js";
-import "./lazysizes.js";
-import "./lightbox.js";
+import { initRoom } from "./wall/room.js";
+import { initHome } from "./wall/home.js";
 import "./slider.js";
 
-// Prevent right-click on images
-document.addEventListener('DOMContentLoaded', function() {
-  // Disable right-click on all images
-  document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-      e.preventDefault();
-      return false;
-    }
-  }, false);
-  
-  // Disable dragging of images
-  document.addEventListener('dragstart', function(e) {
-    if (e.target.tagName === 'IMG') {
-      e.preventDefault();
-      return false;
-    }
-  }, false);
+initRoom();
+initHome();
+
+// Prevent right-click and dragging on images
+document.addEventListener("contextmenu", (e) => {
+  if (e.target.tagName === "IMG") e.preventDefault();
+});
+document.addEventListener("dragstart", (e) => {
+  if (e.target.tagName === "IMG" || e.target.closest?.(".frame")) e.preventDefault();
 });
