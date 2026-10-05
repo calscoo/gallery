@@ -1,5 +1,21 @@
 import { reduced, store } from "./util.js";
 
+// Run fn once the page is visible, finished loading and painted. Gives up waiting on the load after 8 seconds.
+function whenShown(fn) {
+  let done = false;
+  const paint = () => { if (!done) { done = true; requestAnimationFrame(() => requestAnimationFrame(fn)); } };
+  const loaded = () => {
+    if (document.readyState === "complete") paint();
+    else { addEventListener("load", paint, { once: true }); setTimeout(paint, 8000); }
+  };
+  const visible = () => {
+    if (document.hidden) document.addEventListener("visibilitychange", visible, { once: true });
+    else loaded();
+  };
+  if (document.prerendering) document.addEventListener("prerenderingchange", visible, { once: true });
+  else visible();
+}
+
 // Auto-walk. After a few seconds without input the wall moves on its own.
 // At the end of the wall it pauses, then goes to the next room, which pauses again before it walks.
 // Left alone, it cycles through every room forever. Any input stops it and restarts the idle clock.
@@ -32,8 +48,17 @@ export class Walker {
     // A scroll we did not cause (momentum after a flick) restarts the idle clock.
     onIdleScroll?.(() => { if (!this.walking && !this.ending) this.arm(); });
 
+    // Arriving in a room counts as the start of inactivity, but only once the room is on screen.
+    // Browsers can load the next page in the background (prerender, or a hidden tab) and run its
+    // scripts early, so the clock waits for the page to be shown, loaded and painted.
+    addEventListener("visibilitychange", () => {
+      if (document.hidden) { this.stop(); this.cancelEnd(); clearTimeout(this.timer); }
+      else this.arm();
+    });
+    addEventListener("pageshow", (e) => { if (e.persisted) this.arm(); });
+
     this.render();
-    this.arm();
+    whenShown(() => this.arm());
   }
 
   poke(e) {
@@ -49,7 +74,7 @@ export class Walker {
   }
 
   start() {
-    if (!this.enabled || this.walking || this.ending) return;
+    if (!this.enabled || this.walking || this.ending || document.hidden) return;
     if (this.paused?.()) { this.arm(); return; }
     this.walking = true;
     this.render();
