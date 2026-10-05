@@ -273,7 +273,9 @@ export function initRoom() {
       if (walkPos == null || Math.abs(walkPos - pos()) > 2) walkPos = pos();
       walkPos += (isH() ? 42 : 34) * dt;
       setPos(walkPos);
-      return walkPos < span() - 1;
+      // The browser stops the scroll at the real end of the wall, which can differ from the measured size
+      // (phone toolbars, rounding). Falling behind the target means the end is reached.
+      return pos() > walkPos - 1.5;
     },
     onEnd: () => { if (room.dataset.next) location.href = room.dataset.next; },
     onIdleScroll: (fn) => (onUserScroll = fn),

@@ -1,16 +1,19 @@
 import { reduced, store } from "./util.js";
 
 // Auto-walk. After a few seconds without input the wall moves on its own.
-// Any input stops it. At the end of the wall it waits, then walks into the next room.
+// At the end of the wall it pauses, then goes to the next room, which pauses again before it walks.
+// Left alone, it cycles through every room forever. Any input stops it and restarts the idle clock.
 // step(dt) moves the wall and returns false at the end.
 export class Walker {
-  constructor({ step, onEnd, onIdleScroll, idleMs = 3000, mount }) {
+  constructor({ step, onEnd, onIdleScroll, idleMs = 3000, endPauseMs = 3000, mount }) {
     this.step = step;
     this.onEnd = onEnd;
     this.idleMs = idleMs;
+    this.endPauseMs = endPauseMs;
     const saved = store.get("localStorage", "walk-enabled");
     this.enabled = saved == null ? !reduced : saved === "1";
     this.walking = false;
+    this.ending = false;
 
     this.el = document.createElement("div");
     this.el.className = "walk";
@@ -27,19 +30,16 @@ export class Walker {
       last = [e.clientX, e.clientY];
     }, { passive: true });
     // A scroll we did not cause (momentum after a flick) restarts the idle clock.
-    onIdleScroll?.(() => { if (!this.walking) this.arm(); });
+    onIdleScroll?.(() => { if (!this.walking && !this.ending) this.arm(); });
 
     this.render();
-    if (store.get("sessionStorage", "walk-continue") === "1" && this.enabled) {
-      store.set("sessionStorage", "walk-continue", null);
-      setTimeout(() => this.start(), 1200);
-    } else this.arm();
+    this.arm();
   }
 
   poke(e) {
     if (e?.target instanceof Node && this.el.contains(e.target)) return;
     if (this.walking) this.stop();
-    clearTimeout(this.endTimer);
+    this.cancelEnd();
     this.arm();
   }
 
@@ -49,7 +49,7 @@ export class Walker {
   }
 
   start() {
-    if (!this.enabled || this.walking) return;
+    if (!this.enabled || this.walking || this.ending) return;
     if (this.paused?.()) { this.arm(); return; }
     this.walking = true;
     this.render();
@@ -60,11 +60,13 @@ export class Walker {
       t = now;
       if (this.step(dt) === false) {
         this.walking = false;
+        this.ending = true;
         this.render();
         this.endTimer = setTimeout(() => {
-          store.set("sessionStorage", "walk-continue", "1");
+          this.ending = false;
+          if (this.paused?.()) { this.render(); this.arm(); return; }
           this.onEnd?.();
-        }, 2500);
+        }, this.endPauseMs);
         return;
       }
       this.raf = requestAnimationFrame(loop);
@@ -78,11 +80,18 @@ export class Walker {
     this.render();
   }
 
+  cancelEnd() {
+    if (!this.ending) return;
+    clearTimeout(this.endTimer);
+    this.ending = false;
+    this.render();
+  }
+
   toggle() {
     this.enabled = !this.enabled;
     store.set("localStorage", "walk-enabled", this.enabled ? "1" : "0");
     if (this.enabled) this.start();
-    else { this.stop(); clearTimeout(this.timer); }
+    else { this.stop(); this.cancelEnd(); clearTimeout(this.timer); }
     this.render();
   }
 
@@ -92,7 +101,10 @@ export class Walker {
     b.setAttribute("aria-pressed", String(this.enabled));
     b.textContent = this.enabled ? "Auto-walk on" : "Auto-walk off";
     const stopHint = matchMedia("(pointer: coarse)").matches ? "Touch the wall to stop." : "Scroll or press a key to stop.";
-    s.textContent = !this.enabled ? "" : this.walking ? `Walking. ${stopHint}` : `Starts after ${this.idleMs / 1000} seconds without input`;
-    this.el.classList.toggle("walking", this.walking);
+    s.textContent = !this.enabled ? ""
+      : this.walking ? `Walking. ${stopHint}`
+      : this.ending ? `Next room in ${this.endPauseMs / 1000} seconds`
+      : `Starts after ${this.idleMs / 1000} seconds without input`;
+    this.el.classList.toggle("walking", this.walking || this.ending);
   }
 }
