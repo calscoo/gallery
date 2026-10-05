@@ -288,8 +288,16 @@ export function initRoom() {
   room.addEventListener("scroll", scrolled, { passive: true });
   addEventListener("scroll", scrolled, { passive: true });
 
-  let resizeTimer = 0;
-  addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(apply, 150); });
+  // Phone toolbars change the window height while scrolling. A top to bottom wall only re-hangs when the width changes.
+  let resizeTimer = 0, lastWidth = innerWidth;
+  addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (mode === "v" && PHONE.matches && innerWidth === lastWidth) return;
+      lastWidth = innerWidth;
+      apply();
+    }, 150);
+  });
   PHONE.addEventListener("change", apply);
 
   apply();

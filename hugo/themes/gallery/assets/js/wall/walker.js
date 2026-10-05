@@ -21,7 +21,7 @@ function whenShown(fn) {
 // Left alone, it cycles through every room forever. Any input stops it and restarts the idle clock.
 // step(dt) moves the wall and returns false at the end.
 export class Walker {
-  constructor({ step, onEnd, onIdleScroll, idleMs = 3000, endPauseMs = 3000, mount }) {
+  constructor({ step, onEnd, onIdleScroll, idleMs = 4000, endPauseMs = 4000, mount }) {
     this.step = step;
     this.onEnd = onEnd;
     this.idleMs = idleMs;
@@ -33,7 +33,7 @@ export class Walker {
 
     this.el = document.createElement("div");
     this.el.className = "walk";
-    this.el.innerHTML = `<button type="button"></button><span></span>`;
+    this.el.innerHTML = `<button type="button"></button>`;
     mount.append(this.el);
     this.el.querySelector("button").addEventListener("click", () => this.toggle());
 
@@ -122,14 +122,8 @@ export class Walker {
 
   render() {
     const b = this.el.querySelector("button");
-    const s = this.el.querySelector("span");
     b.setAttribute("aria-pressed", String(this.enabled));
     b.textContent = this.enabled ? "Auto-walk on" : "Auto-walk off";
-    const stopHint = matchMedia("(pointer: coarse)").matches ? "Touch the wall to stop." : "Scroll or press a key to stop.";
-    s.textContent = !this.enabled ? ""
-      : this.walking ? `Walking. ${stopHint}`
-      : this.ending ? `Next room in ${this.endPauseMs / 1000} seconds`
-      : `Starts after ${this.idleMs / 1000} seconds without input`;
     this.el.classList.toggle("walking", this.walking || this.ending);
   }
 }
