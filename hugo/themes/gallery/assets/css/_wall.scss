@@ -217,7 +217,9 @@ button {
   }
 }
 
+// The plate hangs under the frame, flush with its right edge. A plate wider than its frame extends to the left.
 .plate {
+  align-self: flex-end;
   margin-top: 12px;
   padding: 5px 10px;
   background: var(--card);
@@ -317,9 +319,11 @@ button {
   .plate {
     margin-top: 8px;
     padding: 4px 8px;
-    text-align: center;
+    text-align: right;
     white-space: normal;
   }
+
+  .plate b { white-space: nowrap; }
 
   .plate span {
     display: block;
@@ -441,10 +445,13 @@ hgroup,
 .intro {
   flex: none;
   width: unquote("min(30rem, 80vw)");
+  container-type: inline-size;
 
+  // One size for every room, set so the longest room name fits the intro column.
   h1 {
     font-weight: 200;
-    font-size: clamp(3rem, 6.5vw, 6.5rem);
+    font-size: 3.5rem;
+    font-size: unquote("min(3.85rem, 12.5cqi)");
     line-height: 0.95;
     letter-spacing: -0.035em;
   }

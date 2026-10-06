@@ -21,6 +21,7 @@ export function initHome() {
   function byWidth(it, w) {
     const m = Math.round(w * F), iw = Math.max(20, Math.round(w - 2 * B - 2 * m));
     set(it, iw, Math.round(iw / it.r), m);
+    it.el.style.width = iw + 2 * (m + B) + "px";
   }
   function byHeight(it, ih) {
     const m = Math.round(ih * 0.05);
@@ -65,7 +66,12 @@ export function initHome() {
       const shares = groups.map((g, gi) => (gi === 0 ? 0.82 : 0.56 + 0.12 * g.length + (gi % 2 ? -0.03 : 0.03)));
       const widths = groups.map((g, gi) => stackWidth(g.map((x) => items[x]), H * Math.min(0.92, shares[gi])));
       if (widths.some((w) => w < 60)) continue;
-      const colW = (k) => groups.map((g, gi) => Math.max(widths[gi] * k, ...g.map((x) => plateW[x])));
+      // Frames are centred in their stack and plates are flush right, so a plate wider than its frame
+      // needs room on both sides to keep clear of the next stack.
+      const colW = (k) => groups.map((g, gi) => {
+        const w = widths[gi] * k;
+        return w + 2 * Math.max(0, ...g.map((x) => plateW[x] - w));
+      });
       const total = (k) => colW(k).reduce((a, b) => a + b, 0) + CG * (groups.length - 1);
       let k = Math.min(1, Wv / total(1));
       for (let pass = 0; pass < 3; pass++) k = Math.min(1, k * (Wv / total(k)));
