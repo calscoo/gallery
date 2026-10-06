@@ -1,9 +1,7 @@
-import { rand, reduced, cardHTML } from "./util.js";
+import { rand, reduced, cardHTML, PHONE } from "./util.js";
 import { Walker } from "./walker.js";
 import { makeCloser } from "./closer.js";
 
-// Phones hang the wall top to bottom. Tablets and desktops walk it sideways.
-const PHONE = matchMedia("(max-width: 699px), (max-height: 499px) and (pointer: coarse)");
 const HOVER = matchMedia("(hover: hover)");
 
 // Frame finish per piece: mostly black, some white, a few thin frames with no mat.

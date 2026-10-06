@@ -1,5 +1,8 @@
 export const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Phones (and phones held sideways) hang walls top to bottom. Tablets and desktops walk them sideways.
+export const PHONE = matchMedia("(max-width: 699px), (max-height: 499px) and (pointer: coarse)");
+
 // Storage can be blocked (private windows, strict settings). Treat that as empty.
 export const store = {
   get(area, key) {

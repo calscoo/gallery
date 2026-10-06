@@ -1,32 +1,24 @@
 {{ define "bodyclass" }}home{{ end }}
 {{ define "main" }}
   {{ $rooms := partialCached "rooms.html" . "rooms" }}
-  <section class="entrance">
-    <div>
+  <section class="lobby" id="rooms">
+    <div class="lobby-intro">
       <h1>{{ replace (site.Params.author.name | default .Title) " " "<br>" | safeHTML }}</h1>
-      {{ with .Params.intro }}<p class="lead">{{ . }}</p>{{ end }}
-      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      {{ with .Params.intro | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
     </div>
-    {{ with index $rooms 0 }}
-      {{ $room := . }}
-      {{ with partial "featured-image.html" $room }}{{ partial "hung.html" (dict "image" . "page" $room) }}{{ end }}
-    {{ end }}
-  </section>
-  <section class="directory" id="rooms">
-    <div class="plaque">
-      <h2>Rooms</h2>
-      <ol>
-        {{ range $i, $room := $rooms }}
-          <li><a href="{{ .RelPermalink }}" data-room="{{ $i }}">{{ .Title }}<span>{{ len (.Resources.ByType "image") }} works</span></a></li>
-        {{ end }}
-      </ol>
-    </div>
-    <div class="preview" id="preview">
-      {{ range $i, $room := $rooms }}
+    <nav class="lobby-hang" id="lobby" aria-label="Rooms">
+      {{ range $room := $rooms }}
         {{ with partial "featured-image.html" $room }}
-          <template data-room="{{ $i }}">{{ partial "hung.html" (dict "image" . "page" $room) }}</template>
+          {{ $p := partial "piece.html" (dict "image" . "page" $room) }}
+          <a class="lobby-item" href="{{ $room.RelPermalink }}">
+            <span class="frame f-black">
+              <img src="{{ $p.wall.RelPermalink }}" width="{{ $p.wall.Width }}" height="{{ $p.wall.Height }}" alt="{{ $room.Title }}: {{ $p.title }}" style="background-color: {{ $p.color }}" />
+            </span>
+            <span class="plate"><b>{{ $room.Title }}</b> <span>{{ len ($room.Resources.ByType "image") }} works</span></span>
+          </a>
         {{ end }}
       {{ end }}
-    </div>
+    </nav>
+    <div class="lobby-floor" aria-hidden="true"></div>
   </section>
 {{ end }}

@@ -1,5 +1,5 @@
 ---
-# intro: Optional Intro Message
+intro: Photographer and digital artist. Every image here was captured or created by me, with no generative AI.
 description: Welcome to my visual odyssey! I'm a photographer and digital artist creating unique works that challenge perception and ignite imagination. Every image you see here was captured or created by me. I do not use generative AI in my workflow.
 #lastmod: 2023-07-05
 title: calebolson.media
