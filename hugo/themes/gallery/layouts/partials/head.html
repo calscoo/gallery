@@ -2,6 +2,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script>document.documentElement.classList.add("js")</script>
+  {{- with resources.Get "js/lights.js" | minify }}
+  <script>{{ .Content | safeJS }}</script>
+  {{- end }}
   <title>{{ with .Title }}{{ . }} -{{ end }} {{ .Site.Title }}</title>
   <link rel="canonical" href="{{ .Permalink }}" />
   <link rel="icon" type="image/svg+xml" href="{{"favicon.svg" | relURL }}" />

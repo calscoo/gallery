@@ -8,5 +8,13 @@
     <a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>about</a>
     {{- end }}
   </nav>
-  <a class="rooms-link" href="{{ site.Home.RelPermalink }}#rooms">Rooms</a>
+  <div class="top-end">
+    <button type="button" class="lights-btn" id="lights-btn" aria-expanded="false" aria-controls="dimmer" hidden>Lights</button>
+    <a class="rooms-link" href="{{ site.Home.RelPermalink }}#rooms">Rooms</a>
+  </div>
+  <div class="dimmer" id="dimmer" role="group" aria-label="Lighting" hidden>
+    <label><span>Room</span><input type="range" min="0" max="100" step="1" data-light="room" /></label>
+    <label><span>Spotlights</span><input type="range" min="0" max="100" step="1" data-light="spot" /></label>
+    <button type="button" class="dimmer-reset" data-light="reset">Reset</button>
+  </div>
 </header>
