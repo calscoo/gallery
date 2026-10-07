@@ -1,7 +1,7 @@
-<footer class="foot">
+<footer class="floor">
   <span>© {{ now.Format "2006" }} {{ site.Params.author.name }}. Hugo-built, Amplify-deployed, Terraform-provisioned on AWS.</span>
-  <span>
+  <nav aria-label="Elsewhere">
     {{- with site.Params.socialIcons.instagram }}<a href="{{ . }}" target="_blank" rel="noopener">Instagram</a>{{ end }}
     {{- with site.Params.author.email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ end -}}
-  </span>
+  </nav>
 </footer>

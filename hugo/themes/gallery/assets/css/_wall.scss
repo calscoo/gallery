@@ -23,12 +23,16 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100svh;
   background: radial-gradient(120% 70% at 50% -10%, var(--wall-lit), transparent 70%) var(--wall) no-repeat;
   font: 400 1rem/1.55 "Libre Franklin", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+body > main { flex: 1 0 auto; }
 
 a { color: inherit; }
 img { display: block; }
@@ -153,8 +157,8 @@ button {
   grid-template-columns: minmax(12rem, 0.42fr) 1.58fr;
   align-items: center;
   gap: 3vw;
-  min-height: 100svh;
-  padding: 76px var(--gutter) calc(var(--floor-h) + 28px);
+  min-height: calc(100svh - var(--floor-h));
+  padding: 76px var(--gutter) 28px;
 
   h1 {
     color: #2a2b2d;
@@ -262,16 +266,6 @@ button {
   }
 }
 
-.lobby-floor {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: var(--floor-h);
-  border-top: 6px solid var(--skirting);
-  background: linear-gradient(var(--floor-1), var(--floor-2));
-}
-
 // Portrait tablets: the name above, the hang below it.
 @media (min-width: 700px) and (max-aspect-ratio: 1/1) {
   .lobby {
@@ -304,7 +298,6 @@ button {
     gap: 22px;
   }
 
-  .lobby-floor { display: none; }
 }
 
 .lobby-row {
@@ -412,19 +405,33 @@ hgroup,
   }
 }
 
-.foot {
+// The floor: every page ends on it, and it carries the footer links.
+.floor {
+  position: relative;
+  z-index: 2;
   display: flex;
+  flex: none;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 28px var(--gutter) 36px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  color: var(--quiet);
+  align-content: center;
+  align-items: center;
+  gap: 0.4rem 1.5rem;
+  min-height: var(--floor-h);
+  padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+  border-top: 6px solid var(--skirting);
+  background: linear-gradient(var(--floor-1), var(--floor-2));
+  color: #2b2c2e;
   font-size: 0.8rem;
 
-  span:last-child {
+  nav {
     display: flex;
     gap: 1rem;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; text-underline-offset: 3px; }
   }
 }
 
@@ -564,32 +571,24 @@ hgroup,
   &:focus-visible { transform: translateY(-2px); }
 }
 
-.floor { display: none; }
-
+// A sideways wall fills the screen, so its floor stays pinned to the bottom.
 body.walls-h {
   overflow: hidden;
 
   .floor {
     position: fixed;
-    z-index: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    display: block;
     height: var(--floor-h);
-    border-top: 6px solid var(--skirting);
-    background: linear-gradient(var(--floor-1), var(--floor-2));
+    overflow: hidden;
   }
-
-  .foot { display: none; }
 }
 
 // Room controls: position rail, count, auto-walk
 
-.room-ui { display: none; }
-
-
-.js .room-page .room-ui { display: block; }
+html:not(.js) .status,
+html:not(.js) .rail { display: none; }
 
 .status {
   position: fixed;
@@ -648,12 +647,13 @@ body.walls-h {
   &.dragging i { cursor: grabbing; }
 }
 
+// A top to bottom wall: the counter and auto-walk stay at the bottom of the screen while you scroll,
+// and come to rest just above the floor at the end, so they never cover the footer links.
 body.walls-v {
   .status {
+    position: sticky;
     bottom: 0;
     padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
-    right: 0;
-    left: 0;
     background: linear-gradient(rgba(198, 199, 195, 0), rgba(198, 199, 195, 0.92) 40%);
   }
 
