@@ -362,18 +362,23 @@ button {
 
 // Page text: about and 404
 
+// Page titles share the room titles' type: same size, weight and colour.
+%wall-title {
+  color: var(--ink);
+  font-weight: 200;
+  font-size: 3.5rem;
+  font-size: unquote("min(3.75rem, 10vw)");
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
 hgroup,
 .lettering {
   max-width: 48rem;
   margin: 0 auto;
   padding: 120px var(--gutter) 2rem;
 
-  h1 {
-    font-weight: 200;
-    font-size: clamp(3rem, 7vw, 6rem);
-    line-height: 0.95;
-    letter-spacing: -0.035em;
-  }
+  h1 { @extend %wall-title; }
 
   p {
     margin-top: 1.25rem;
@@ -462,11 +467,9 @@ hgroup,
 
   // One size for every room, set so the longest room name fits the intro column.
   h1 {
-    font-weight: 200;
-    font-size: 3.5rem;
+    @extend %wall-title;
+
     font-size: unquote("min(3.85rem, 12.5cqi)");
-    line-height: 0.95;
-    letter-spacing: -0.035em;
   }
 
   p {

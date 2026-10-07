@@ -172,7 +172,8 @@ export function initRoom() {
   pieces.addEventListener("focusout", tipHide);
 
   // Closer look.
-  const closer = makeCloser({ box: document.getElementById("closer"), room, frames, onClose: centerOn });
+  // Closing centres the wall on the last piece viewed, after the browser restores its scroll position.
+  const closer = makeCloser({ box: document.getElementById("closer"), room, frames, onClose: (i) => requestAnimationFrame(() => centerOn(i)) });
   pieces.addEventListener("click", (e) => {
     const f = e.target.closest(".frame");
     if (!f) return;
@@ -305,6 +306,6 @@ export function initRoom() {
   const fromHash = closer.indexOf(decodeURIComponent(location.hash.slice(1)));
   if (fromHash >= 0) {
     requestAnimationFrame(() => centerOn(fromHash));
-    closer.open(fromHash);
+    closer.openFromLink(fromHash);
   }
 }

@@ -1,35 +1,67 @@
 import { cardHTML } from "./util.js";
 
 // Closer look: one piece large with its label. The URL hash names the piece, so a link can open it directly.
+// Opening a piece adds one history entry, so Back (browser, mouse or swipe) returns to the wall.
+// Moving to the previous or next piece updates that entry instead of adding more.
 export function makeCloser({ box, room, frames, onClose }) {
   const img = box.querySelector(".frame img");
   const card = box.querySelector(".card");
   let idx = 0;
   let opener = null;
+  let ownEntry = false; // the open piece has its own history entry, with the wall below it
+  const wallURL = () => location.pathname + location.search;
+  const slug = () => frames[idx].dataset.slug;
 
-  function draw() {
+  function show(i) {
+    idx = i;
     const f = frames[idx];
     img.src = f.dataset.full;
     img.width = +f.dataset.fw;
     img.height = +f.dataset.fh;
     img.alt = f.dataset.title;
     card.innerHTML = cardHTML(f, room);
-    history.replaceState(null, "", "#" + f.dataset.slug);
+    if (box.hidden) {
+      opener = document.activeElement;
+      box.hidden = false;
+      box.querySelector("nav [data-act=close]").focus();
+    }
   }
-  function open(i) {
-    idx = i;
-    opener = document.activeElement;
-    draw();
-    box.hidden = false;
-    box.querySelector("nav [data-act=close]").focus();
-  }
-  function close() {
+  function hide() {
+    if (box.hidden) return;
     box.hidden = true;
-    history.replaceState(null, "", location.pathname + location.search);
     opener?.focus?.({ preventScroll: true });
     onClose?.(idx);
   }
-  const step = (d) => { idx = (idx + d + frames.length) % frames.length; draw(); };
+
+  function open(i) {
+    show(i);
+    history.pushState({ piece: slug() }, "", "#" + slug());
+    ownEntry = true;
+  }
+  // A link straight to a piece: put the wall underneath it, so Back lands on the wall.
+  // After a reload the entries already exist, so leave them alone.
+  function openFromLink(i) {
+    show(i);
+    if (history.state?.piece) { ownEntry = true; return; }
+    history.replaceState(null, "", wallURL());
+    history.pushState({ piece: slug() }, "", "#" + slug());
+    ownEntry = true;
+  }
+  function close() {
+    if (ownEntry) history.back();
+    else { history.replaceState(null, "", wallURL()); hide(); }
+  }
+  function step(d) {
+    show((idx + d + frames.length) % frames.length);
+    history.replaceState({ piece: slug() }, "", "#" + slug());
+  }
+
+  // Back and Forward: an entry with a piece opens it, the wall entry closes the view.
+  addEventListener("popstate", () => {
+    const i = frames.findIndex((f) => f.dataset.slug === decodeURIComponent(location.hash.slice(1)));
+    if (i >= 0) { show(i); ownEntry = true; }
+    else { ownEntry = false; hide(); }
+  });
 
   box.addEventListener("click", (e) => {
     const act = e.target.closest("[data-act]")?.dataset.act;
@@ -60,7 +92,8 @@ export function makeCloser({ box, room, frames, onClose }) {
 
   return {
     open,
+    openFromLink,
     isOpen: () => !box.hidden,
-    indexOf: (slug) => frames.findIndex((f) => f.dataset.slug === slug),
+    indexOf: (s) => frames.findIndex((f) => f.dataset.slug === s),
   };
 }
