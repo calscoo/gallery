@@ -1,6 +1,6 @@
 <header class="top">
   <a class="brand" href="{{ site.Home.RelPermalink }}">{{ site.Params.author.name | default site.Title }}</a>
-  <nav aria-label="Rooms">
+  <nav id="site-nav" aria-label="Rooms">
     {{- range partialCached "rooms.html" . "rooms" }}
     <a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
     {{- end }}
@@ -8,5 +8,5 @@
     <a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>about</a>
     {{- end }}
   </nav>
-  <a class="rooms-link" href="{{ site.Home.RelPermalink }}#rooms">Rooms</a>
+  <a class="rooms-link" href="{{ site.Home.RelPermalink }}#rooms" aria-controls="site-nav" aria-expanded="false">Rooms</a>
 </header>
