@@ -13,6 +13,11 @@ export const store = {
   },
 };
 
+// Frame finish per piece: mostly black, some white, a few thin frames with no mat.
+// Keyed by the piece, so a photo has the same frame on the home page and on its wall.
+export const finishOf = (slug) => { const r = rand(slug, 7); return r < 0.58 ? "black" : r < 0.84 ? "white" : "thin"; };
+export const spec = (fin) => (fin === "thin" ? { b: 4, f: 0 } : { b: 9, f: 0.045 });
+
 // Stable number in [0, 1) per piece, so a wall hangs the same way on every visit.
 export function rand(id, salt = 0) {
   let h = 2166136261 ^ salt;

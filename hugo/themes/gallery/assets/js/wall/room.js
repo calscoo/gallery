@@ -1,12 +1,9 @@
-import { rand, reduced, cardHTML, PHONE } from "./util.js";
+import { rand, reduced, cardHTML, PHONE, finishOf, spec } from "./util.js";
 import { Walker } from "./walker.js";
 import { makeCloser } from "./closer.js";
 
 const HOVER = matchMedia("(hover: hover)");
 
-// Frame finish per piece: mostly black, some white, a few thin frames with no mat.
-const finishOf = (slug) => { const r = rand(slug, 7); return r < 0.58 ? "black" : r < 0.84 ? "white" : "thin"; };
-const spec = (fin) => (fin === "thin" ? { b: 4, f: 0 } : { b: 9, f: 0.045 });
 
 export function initRoom() {
   const room = document.getElementById("room");

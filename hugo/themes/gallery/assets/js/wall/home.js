@@ -1,8 +1,8 @@
+import { finishOf, spec } from "./util.js";
+
 // Lobby: every room hangs as its cover, with its name and work count under the frame, flush right.
 // Wide screens get stacks (the first room alone and largest). Phones and portrait tablets get rows
 // that keep each cover's proportions, with the first room on top and nearly full width.
-const B = 9; // frame border
-const F = 0.045; // mat, as a share of the frame width
 const G = 30; // gap between frames in a stack
 const LABEL = 48; // height of a label (name, count and the space above them)
 const ROWS = matchMedia("(max-width: 699px), (max-height: 499px) and (pointer: coarse), (orientation: portrait) and (max-width: 1100px)");
@@ -13,20 +13,25 @@ export function initHome() {
   const lobby = hang.closest(".lobby");
   const items = [...hang.querySelectorAll(".lobby-item")].map((el) => {
     const img = el.querySelector("img");
-    return { el, img, frame: el.querySelector(".frame"), plate: el.querySelector(".plate"), r: +img.getAttribute("width") / +img.getAttribute("height") };
+    const fin = finishOf(el.dataset.slug || el.getAttribute("href"));
+    const frame = el.querySelector(".frame");
+    frame.className = "frame f-" + fin;
+    // b: border, f: mat as a share of the frame width (stacks), mh: mat as a share of the image height (rows).
+    const { b, f } = spec(fin);
+    return { el, img, frame, plate: el.querySelector(".plate"), b, f, mh: f ? 0.05 : 0, r: +img.getAttribute("width") / +img.getAttribute("height") };
   });
   if (!items.length) return;
 
   // Size one frame by its outer width (stacks) or by its image height (rows).
   function byWidth(it, w) {
-    const m = Math.round(w * F), iw = Math.max(20, Math.round(w - 2 * B - 2 * m));
+    const m = Math.round(w * it.f), iw = Math.max(20, Math.round(w - 2 * it.b - 2 * m));
     set(it, iw, Math.round(iw / it.r), m);
-    it.el.style.width = iw + 2 * (m + B) + "px";
+    it.el.style.width = iw + 2 * (m + it.b) + "px";
   }
   function byHeight(it, ih) {
-    const m = Math.round(ih * 0.05);
+    const m = Math.round(ih * it.mh);
     set(it, Math.round(ih * it.r), Math.round(ih), m);
-    return Math.round(ih * it.r) + 2 * (m + B);
+    return Math.round(ih * it.r) + 2 * (m + it.b);
   }
   function set(it, iw, ih, m) {
     it.frame.style.setProperty("--matw", m + "px");
@@ -37,7 +42,7 @@ export function initHome() {
   // Width of a stack whose frames, labels and gaps add up to height H.
   function stackWidth(group, H) {
     let A = 0, C = 0;
-    for (const it of group) { A += (1 - 2 * F) / it.r + 2 * F; C += 2 * B * (1 - 1 / it.r); }
+    for (const it of group) { A += (1 - 2 * it.f) / it.r + 2 * it.f; C += 2 * it.b * (1 - 1 / it.r); }
     return (H - group.length * LABEL - (group.length - 1) * G - C) / A;
   }
 
@@ -90,10 +95,11 @@ export function initHome() {
   function rows() {
     const T = hang.clientWidth, gap = 14;
     const rest = items.slice(1), plan = [];
-    const fit = (group) => {
-      let s = 0;
-      for (const it of group) s += it.r + 0.1;
-      return (T - (group.length - 1) * gap - group.length * 2 * B) / s;
+    // Image height that makes a row of frames fill width W.
+    const fit = (group, W = T) => {
+      let s = 0, fixed = (group.length - 1) * gap;
+      for (const it of group) { s += it.r + 2 * it.mh; fixed += 2 * it.b; }
+      return (W - fixed) / s;
     };
     for (let i = 0; i < rest.length;) {
       let k = Math.min(2, rest.length - i);
@@ -105,7 +111,7 @@ export function initHome() {
     const heights = plan.map((g) => Math.min(fit(g), Math.max(220, T * 0.36)));
     // The first room fills most of the width, short of taking over the whole screen.
     const hero = items[0];
-    const heroH = Math.min(innerHeight * 0.58, (T * 0.88 - 2 * B) / (hero.r + 0.1));
+    const heroH = Math.min(innerHeight * 0.58, fit([hero], T * 0.88));
 
     const mk = (group, h) => {
       const row = document.createElement("div");

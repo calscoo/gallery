@@ -10,7 +10,7 @@
       {{ range $room := $rooms }}
         {{ with partial "featured-image.html" $room }}
           {{ $p := partial "piece.html" (dict "image" . "page" $room) }}
-          <a class="lobby-item" href="{{ $room.RelPermalink }}">
+          <a class="lobby-item" href="{{ $room.RelPermalink }}" data-slug="{{ $p.slug }}">
             <span class="frame f-black">
               <img src="{{ $p.wall.RelPermalink }}" width="{{ $p.wall.Width }}" height="{{ $p.wall.Height }}" alt="{{ $room.Title }}: {{ $p.title }}" style="background-color: {{ $p.color }}" />
             </span>
