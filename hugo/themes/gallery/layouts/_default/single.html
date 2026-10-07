@@ -18,11 +18,6 @@
       <header class="intro">
         <h1>{{ .Title }}</h1>
         {{ with .Description }}<p>{{ . }}</p>{{ end }}
-        <p class="hint">{{ len $images }} works.
-          <span class="hint-h">Scroll or drag to move along the wall.</span>
-          <span class="hint-t">Swipe to move along the wall.</span>
-          <span class="hint-v">Scroll down the wall.</span>
-          Select a piece to look closer.</p>
       </header>
       <div class="pieces" id="pieces">
         {{ range $images }}

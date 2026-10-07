@@ -462,12 +462,6 @@ hgroup,
     font-weight: 300;
     font-size: 1.1rem;
   }
-
-  .hint {
-    color: var(--quiet);
-    font-weight: 400;
-    font-size: 0.875rem;
-  }
 }
 
 .exit {
@@ -496,16 +490,6 @@ hgroup,
     font-size: 0.875rem;
     letter-spacing: 0;
   }
-}
-
-.hint-v,
-.hint-t,
-.room.is-v .hint-h { display: none; }
-.room.is-v .hint-v { display: inline; }
-
-@media (pointer: coarse) {
-  .room.is-h .hint-h { display: none; }
-  .room.is-h .hint-t { display: inline; }
 }
 
 // Before the script runs (or without it): a simple wrapping wall.
