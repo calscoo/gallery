@@ -411,11 +411,9 @@ hgroup,
   z-index: 2;
   display: flex;
   flex: none;
-  flex-wrap: wrap;
   justify-content: space-between;
-  align-content: center;
   align-items: center;
-  gap: 0.4rem 1.5rem;
+  gap: 1rem;
   min-height: var(--floor-h);
   padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
   border-top: 6px solid var(--skirting);
@@ -423,15 +421,35 @@ hgroup,
   color: #2b2c2e;
   font-size: 0.8rem;
 
-  nav {
-    display: flex;
-    gap: 1rem;
+  // On narrow screens the line breaks after the name, never inside "All rights reserved".
+  .legal {
+    min-width: 0;
+    margin: 0;
+
+    span { white-space: nowrap; }
   }
 
-  a {
-    text-decoration: none;
+  nav {
+    display: flex;
+    flex: none;
+    gap: 0.25rem;
+    margin-right: -9px;
+  }
 
-    &:hover { text-decoration: underline; text-underline-offset: 3px; }
+  // Icon links, with room around each icon for a thumb.
+  nav a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8;
+    transition: opacity 150ms ease, transform 150ms ease;
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
   }
 }
 
