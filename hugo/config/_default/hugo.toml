@@ -12,7 +12,7 @@ theme = "gallery"
   description = "Example site for hugo-theme-gallery"
   title = "My Gallery"
   # First year of published work, for the copyright line in the footer.
-  copyrightSince = 2019
+  copyrightSince = 2017
   [params.author]
     email = "calebolson.media@gmail.com"
     name = "Caleb Olson"

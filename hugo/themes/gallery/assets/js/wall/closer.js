@@ -12,13 +12,31 @@ export function makeCloser({ box, room, frames, onClose }) {
   const wallURL = () => location.pathname + location.search;
   const slug = () => frames[idx].dataset.slug;
 
+  // Show the piece's wall-size copy at once (it is usually already loaded), then swap in the
+  // full-size copy when it has downloaded. The image hides while switching, so the previous
+  // piece never flashes up.
+  let loading = 0;
+  function setImage(f) {
+    const t = ++loading;
+    const wall = f.querySelector("img");
+    const reveal = () => { if (t === loading) img.style.visibility = ""; };
+    img.style.visibility = "hidden";
+    img.onload = img.onerror = reveal;
+    img.src = wall.currentSrc || wall.src;
+    if (img.complete && img.naturalWidth) reveal();
+    setTimeout(reveal, 400);
+    const full = new Image();
+    full.onload = () => { if (t === loading) img.src = full.src; };
+    full.src = f.dataset.full;
+  }
+
   function show(i) {
     idx = i;
     const f = frames[idx];
-    img.src = f.dataset.full;
     img.width = +f.dataset.fw;
     img.height = +f.dataset.fh;
     img.alt = f.dataset.title;
+    setImage(f);
     card.innerHTML = cardHTML(f, room);
     if (box.hidden) {
       opener = document.activeElement;
