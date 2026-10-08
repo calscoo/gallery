@@ -3,7 +3,7 @@
   {{ $rooms := partialCached "rooms.html" . "rooms" }}
   <section class="lobby" id="rooms">
     <div class="lobby-intro">
-      <h1>{{ replace (site.Params.author.name | default .Title) " " "<br>" | safeHTML }}</h1>
+      <h1>{{ replace site.Title "." "<br>." | safeHTML }}</h1>
       {{ with .Params.intro | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
     </div>
     <nav class="lobby-hang" id="lobby" aria-label="Rooms">

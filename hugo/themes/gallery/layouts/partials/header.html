@@ -1,5 +1,7 @@
 <header class="top">
-  <a class="brand" href="{{ site.Home.RelPermalink }}">{{ site.Params.author.name | default site.Title }}</a>
+  <a class="brand" href="{{ site.Home.RelPermalink }}">
+    <img class="logo" src="{{ "images/logo.png" | relURL }}" alt="Caleb Olson Media" width="992" height="320" />
+  </a>
   <nav id="site-nav" aria-label="Rooms">
     {{- range partialCached "rooms.html" . "rooms" }}
     <a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
