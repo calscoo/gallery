@@ -1,19 +1,17 @@
 {{ define "main" }}
-{{ partial "title.html" . }}
-<!-- Check if the current page is the about page -->
-{{ if eq .RelPermalink "/about/" }}
-<section class="prose">
-  <section class="image-slider">
-    <!-- Image container -->
-    <img id="slider-image" src="/images/caleb.jpg" alt="Caleb Olson" class="fixed-rounded-image" />
-
-    <!-- Left and right arrow buttons -->
-    <button id="prev-arrow" class="arrow-button">❮</button>
-    <button id="next-arrow" class="arrow-button">❯</button>
-  </section>
-</section>
-{{ end }}
-<section class="prose">
-  {{ .Content }}
-</section>
+  {{- /* A text page set as one reading column, like an exhibition catalogue.
+         Front matter: portrait (opening image), portrait_alt, contact (true adds the contact plaque). */ -}}
+  <article class="essay">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.portrait }}
+      <figure class="opening">
+        <span class="frame f-black"><img src="{{ . | relURL }}" alt="{{ $.Params.portrait_alt }}" width="400" height="400" /></span>
+        <figcaption class="card"><h3>Self-portrait</h3>{{ site.Params.author.name }}</figcaption>
+      </figure>
+    {{ end }}
+    <div class="essay-body">
+      {{ .Content }}
+    </div>
+    {{ if .Params.contact }}{{ partial "contact.html" . }}{{ end }}
+  </article>
 {{ end }}

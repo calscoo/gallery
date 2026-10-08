@@ -394,19 +394,143 @@ hgroup,
 
 .lettering { min-height: 70svh; }
 
-.prose {
-  max-width: 48rem;
+// Essay: a text page set as one reading column, like an exhibition catalogue. A framed portrait
+// opens it, more portraits hang in the text, and a pull quote breaks the column.
+.essay {
+  max-width: 40rem;
   margin: 0 auto;
-  padding: 1rem var(--gutter) 4rem;
-  font-weight: 300;
-  font-size: 1.05rem;
-  line-height: 1.75;
+  padding: 120px var(--gutter) 12vh;
 
-  p { margin: 1.25em 0; }
+  h1 { @extend %wall-title; }
 
-  a {
-    font-weight: 500;
-    text-decoration: underline;
+  .frame {
+    cursor: default;
+
+    img { height: auto; }
+  }
+
+  a { text-underline-offset: 3px; }
+
+  .plaque {
+    clear: both;
+    margin-top: 4rem;
+
+    p {
+      margin: -4px 0 8px;
+      color: #b9bcbe;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.opening {
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+  margin: 2.5rem 0 3rem;
+
+  .frame {
+    --matw: 22px;
+
+    img { width: unquote("min(320px, 100vw - 2 * var(--gutter) - 62px)"); }
+  }
+}
+
+.essay-body {
+  p {
+    margin-top: 1.4em;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  > p:first-child {
+    margin-top: 0;
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+    line-height: 1.55;
+  }
+
+  > p:last-child { color: var(--quiet); }
+
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+// A portrait hung in the text, half out of the column on wide screens.
+.inset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0.4em 0 1.2em;
+
+  .frame {
+    --matw: 12px;
+
+    img { width: 190px; }
+  }
+
+  .card {
+    width: auto;
+    max-width: 13rem;
+  }
+}
+
+.inset-right {
+  float: right;
+  align-items: flex-end;
+  margin-right: -6rem;
+  margin-left: 2.2rem;
+}
+
+.inset-left {
+  float: left;
+  align-items: flex-start;
+  margin-right: 2.2rem;
+  margin-left: -6rem;
+}
+
+.pull {
+  clear: both;
+  margin: 3.5rem -4rem;
+  padding: 2.2rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+  font-weight: 200;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 1000px) {
+  .inset-right { margin-right: 0; }
+  .inset-left { margin-left: 0; }
+
+  .pull {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .opening {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inset-right,
+  .inset-left {
+    float: none;
+    align-items: flex-end;
+    margin: 2rem 0;
+
+    .frame img { width: unquote("min(62vw, 260px)"); }
   }
 }
 
