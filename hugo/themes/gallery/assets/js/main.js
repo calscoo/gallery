@@ -1,7 +1,6 @@
 import { initRoom } from "./wall/room.js";
 import { initHome } from "./wall/home.js";
 import { initMenu } from "./wall/menu.js";
-import "./slider.js";
 
 initMenu();
 initRoom();
