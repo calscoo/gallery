@@ -2,15 +2,34 @@
 layout: prose
 rss_ignore: true
 title: about
+portrait: images/caleb3.jpg
+portrait_alt: Caleb Olson taking a photo in a mirror with a Fujifilm camera
+contact: true
 menu:
   main:
     weight: 90
 ---
 
-I'm a visual storyteller, driven by a passion for pushing the boundaries of artistic expression. I capture the world around us through various means, then transform it into surreal and captivating multimedia assemblages. From the vastness of the cosmos to the intricate details of architecture, every image captured becomes a canvas for my imagination. With a blend of photography, 3D modeling, and digital artistry, I create one-of-a-kind pieces that challenge perception and ignite curiosity. I believe that art is a journey of discovery, a constant evolution of ideas and techniques, and an opportunity to see the world through a kaleidoscope of perspectives. My work reflects this philosophy, blending traditional photography with digital innovation to craft unique and captivating visual stories. Whether capturing the raw beauty of nature or constructing intricate dreamscapes, my goal is to create works that evoke emotion, spark conversation, and leave a lasting impression.
+I'm a visual storyteller, driven by a passion for pushing the boundaries of artistic expression. I capture the world around us through various means, then transform it into surreal and captivating multimedia assemblages. From the vastness of the cosmos to the intricate details of architecture, every image captured becomes a canvas for my imagination.
 
-This take on artistic expression didn't develop overnight. My journey started in highschool when I bought my first real camera, spending nearly three months shooting photos every day. My camera became an extension of my curiosity, finding beauty in unexpected places. I even found myself photographing the weight racks in the darkened gym where I worked, long after closing time. Eventually I got a feel for the camera settings and general best practices for photography. At a certain point I felt confident enough in my skills to start taking on clients for portrait sessions. A dozen or so successful shoots later and I started to grow bored of what I was making. Sure, my clients were satisfied with the results, but I was loosing the passion for photography that I felt when starting out scrappy. My hobby became a job; it was lucrative, but at what cost? Who was I really creating for? After some careful consideration, I decided to shift my focus from client work to personal projects. I went back to my roots and resumed shooting whatever the hell I fealt like; the feeling of breaking loose the shackles of creativity is indescribable.
+With a blend of photography, 3D modeling, and digital artistry, I create one-of-a-kind pieces that challenge perception and ignite curiosity. I believe that art is a journey of discovery, a constant evolution of ideas and techniques, and an opportunity to see the world through a kaleidoscope of perspectives. My work reflects this philosophy, blending traditional photography with digital innovation to craft unique and captivating visual stories. Whether capturing the raw beauty of nature or constructing intricate dreamscapes, my goal is to create works that evoke emotion, spark conversation, and leave a lasting impression.
 
-No longer bound, I began to explore the limits of photography. Well past midnight and miles away from light pollution, I tried my hand at shooting the Milky Way. Not long after that I purchased my first camera drone, which opened up an entirely new creative perspective. Finally, one night while processing some images in Photoshop, I mistakenly layered two images on top of each other. Little did I know this single event would become a critical pivot point in my artist journey. From that night forward, I couldn't stop seeing the world through abstract shapes and textures. Everywhere I looked harboured new ideas and an opprotunity to create. My work refuses to be confined, to be neatly labeled or categorized. This defiance, this refusal to conform, was the fire that fueled my journey. It's the essence of my art, and will remain a source of profound pride and fulfillment in my life.
+{{< portrait src="images/caleb2.jpg" finish="white" alt="Caleb Olson photographing through a car window with a Nikon camera" >}}
 
-Please enjoy my gallery while you're here, and don't hesitate to reach out if you'd like to collaberate on a project or have an interest in purchasing a particular piece!
+This take on artistic expression didn't develop overnight. My journey started in high school when I bought my first real camera, spending nearly three months shooting photos every day. My camera became an extension of my curiosity, finding beauty in unexpected places. I even found myself photographing the weight racks in the darkened gym where I worked, long after closing time.
+
+Eventually I got a feel for the camera settings and general best practices for photography. At a certain point I felt confident enough in my skills to start taking on clients for portrait sessions. A dozen or so successful shoots later I started to grow bored of what I was making. Sure, my clients were satisfied with the results, but I was losing the passion for photography that I felt when starting out scrappy. My hobby became a job. It was lucrative, but at what cost? Who was I really creating for?
+
+After some careful consideration, I decided to shift my focus from client work to personal projects. I went back to my roots and resumed shooting whatever the hell I felt like. The feeling of breaking loose the shackles of creativity is indescribable.
+
+{{< pull >}}“My work refuses to be confined, neatly labeled, or categorized.”{{< /pull >}}
+
+{{< portrait src="images/caleb.jpg" side="left" finish="thin" alt="Caleb Olson photographing on a dirt road in winter" >}}
+
+No longer bound, I began to explore the limits of photography. Well past midnight and miles away from light pollution, I tried my hand at shooting the Milky Way. Not long after that I purchased my first camera drone, which opened up an entirely new creative perspective.
+
+Finally, one night while processing some images in Photoshop, I mistakenly layered two images on top of each other. Little did I know this single event would become a critical pivot point in my artist journey. From that night forward, I couldn't stop seeing the world through abstract shapes and textures. Everywhere I looked harbored new ideas and an opportunity to create.
+
+My work refuses to be confined, neatly labeled, or categorized. This defiance, this refusal to conform, was the fire that fueled my journey. It's the essence of my art, and will remain a source of profound pride and fulfillment in my life.
+
+Please enjoy my gallery while you're here, and don't hesitate to reach out if you'd like to collaborate on a project or have an interest in purchasing a particular piece.

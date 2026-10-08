@@ -1,0 +1,997 @@
+// Wall: the site as a gallery. Framed prints on a lit grey wall, museum labels, rooms per album.
+
+:root {
+  --wall: #c6c7c3;
+  --wall-lit: #e4e5e1;
+  --floor-1: #a9a8a3;
+  --floor-2: #8f8e89;
+  --skirting: #e8e8e4;
+  --ink: #1c1d1f;
+  --quiet: #55585b;
+  --frame: #1a1a1a;
+  --frame-white: #efeee9;
+  --mat: #f4f4f1;
+  --card: #ebebe7;
+  --plaque: #26282a;
+  --gutter: clamp(16px, 4vw, 64px);
+  --floor-h: 9vh;
+}
+
+html {
+  background: var(--wall);
+  color: var(--ink);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: radial-gradient(120% 70% at 50% -10%, var(--wall-lit), transparent 70%) var(--wall) no-repeat;
+  font: 400 1rem/1.55 "Libre Franklin", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body > main { flex: 1 0 auto; }
+
+a { color: inherit; }
+img { display: block; }
+
+button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+// Header
+
+.top {
+  position: absolute;
+  z-index: 20;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 20px var(--gutter);
+  font-size: 0.875rem;
+
+  // The logo, a 4x image shown at 30px tall.
+  > .brand {
+    display: flex;
+    align-self: center;
+  }
+
+  .logo {
+    width: auto;
+    height: 30px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem 1.25rem;
+  }
+
+  nav a {
+    color: var(--quiet);
+    text-decoration: none;
+
+    &:hover,
+    &[aria-current] {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 5px;
+    }
+  }
+
+  .rooms-link { display: none; }
+}
+
+// Frames and labels
+
+.frame {
+  display: block;
+  flex: none;
+  padding: var(--matw, 22px);
+  border: 9px solid var(--frame);
+  background: var(--mat);
+  box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.18);
+  cursor: zoom-in;
+  -webkit-user-drag: none;
+
+  img {
+    width: 100%;
+    height: auto;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+
+  &.f-white {
+    border-color: var(--frame-white);
+    box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.14), inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+
+  &.f-thin {
+    padding: 0;
+    border-width: 4px;
+  }
+}
+
+.card {
+  flex: none;
+  width: 168px;
+  padding: 12px 14px 14px;
+  background: var(--card);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.14);
+  color: var(--quiet);
+  font-size: 0.75rem;
+  line-height: 1.45;
+
+  h3 {
+    margin-bottom: 4px;
+    color: var(--ink);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+// Home: the lobby. Every room hangs as its framed cover with a name plate.
+
+.lobby {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.42fr) 1.58fr;
+  align-items: center;
+  gap: 3vw;
+  min-height: calc(100svh - var(--floor-h));
+  padding: 76px var(--gutter) 28px;
+
+  // On phones and tablets the title fills the intro column. On wide screens the intro column
+  // grows to fit a title sized to the window.
+  h1 {
+    color: #2a2b2d;
+    font-weight: 200;
+    font-size: 3.5rem;
+    font-size: unquote("min(7rem, 19cqi)");
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+
+  .lead {
+    max-width: 26ch;
+    margin-top: 1.5rem;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+}
+
+.lobby-hang {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  gap: 28px;
+  min-width: 0;
+}
+
+.js .lobby-hang:not(.is-hung) { visibility: hidden; }
+
+.lobby-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+
+  .frame {
+    cursor: pointer;
+    transition: transform 200ms ease;
+  }
+
+  img { width: 180px; }
+
+  &:hover .frame,
+  &:focus-visible .frame { transform: translateY(-3px); }
+
+  &:focus-visible { outline: none; }
+
+  &:focus-visible .frame {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  &:hover b,
+  &:focus-visible b {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+// The label under each frame: room name flush with the frame's right edge, the work count below it.
+.plate {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: flex-end;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  text-align: right;
+  white-space: nowrap;
+
+  b { font-weight: 500; }
+
+  span {
+    color: var(--quiet);
+    font-size: 0.85em;
+  }
+}
+
+.lobby-intro { container-type: inline-size; }
+
+.lobby.is-cols {
+  grid-template-columns: auto minmax(0, 1fr);
+
+  .lobby-intro { container-type: normal; }
+  h1 { font-size: clamp(3.5rem, 5.6vw, 7.5rem); }
+  .lobby-hang { flex-wrap: nowrap; }
+}
+
+.lobby-col {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+
+  // Light from a picture lamp above the stack. The pool is centred just above the top frame and
+  // fades to nothing at every edge of its box, so it never shows a hard line.
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -26%;
+    right: -40%;
+    left: -40%;
+    height: 46%;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.3) 45%, rgba(255, 255, 255, 0.08) 75%, rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+}
+
+// Portrait tablets: the name above, the hang below it.
+@media (min-width: 700px) and (max-aspect-ratio: 1/1) {
+  .lobby {
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    padding-top: 96px;
+  }
+}
+
+.lobby.is-rows {
+  grid-template-rows: none;
+  grid-template-columns: 1fr;
+  align-content: start;
+  align-items: start;
+  gap: 24px;
+  min-height: 0;
+  padding: 72px var(--gutter) 40px;
+
+  .lead {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .lobby-hang {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 22px;
+  }
+
+}
+
+.lobby-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  .frame {
+    padding: var(--matw);
+  }
+
+  .plate { margin-top: 8px; }
+}
+
+.directory {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 6vw;
+  padding: 8vh var(--gutter) 14vh;
+}
+
+.plaque {
+  padding: 28px 30px 18px;
+  background: var(--plaque);
+  box-shadow: 0 18px 30px -20px rgba(0, 0, 0, 0.6);
+  color: #e9e9e5;
+
+  h2 {
+    margin-bottom: 14px;
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li + li { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    font-weight: 300;
+    font-size: 1.15rem;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible { font-weight: 500; }
+  }
+
+  span {
+    color: #a3a6a8;
+    font-size: 0.8rem;
+  }
+}
+
+
+// Page text: about and 404
+
+// Page titles share the room titles' type: same size, weight, and color.
+%wall-title {
+  color: var(--ink);
+  font-weight: 200;
+  font-size: 3.5rem;
+  font-size: unquote("min(3.75rem, 10vw)");
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+hgroup,
+.lettering {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 120px var(--gutter) 2rem;
+
+  h1 { @extend %wall-title; }
+
+  p {
+    margin-top: 1.25rem;
+    color: var(--quiet);
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.lettering { min-height: 70svh; }
+
+// Essay: a text page set as one reading column, like an exhibition catalogue. A framed portrait
+// opens it, more portraits hang in the text, and a pull quote breaks the column.
+.essay {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 120px var(--gutter) 12vh;
+
+  h1 { @extend %wall-title; }
+
+  .frame {
+    cursor: default;
+
+    img { height: auto; }
+  }
+
+  a { text-underline-offset: 3px; }
+
+  .plaque {
+    clear: both;
+    margin-top: 4rem;
+
+    p {
+      margin: -4px 0 8px;
+      color: #b9bcbe;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.opening {
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+  margin: 2.5rem 0 3rem;
+
+  .frame {
+    --matw: 22px;
+
+    img { width: unquote("min(320px, 100vw - 2 * var(--gutter) - 62px)"); }
+  }
+}
+
+.essay-body {
+  p {
+    margin-top: 1.4em;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  > p:first-child {
+    margin-top: 0;
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+    line-height: 1.55;
+  }
+
+  > p:last-child { color: var(--quiet); }
+
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+// A portrait hung in the text, half out of the column on wide screens.
+.inset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0.4em 0 1.2em;
+
+  .frame {
+    --matw: 12px;
+
+    img { width: 190px; }
+  }
+
+  .card {
+    width: auto;
+    max-width: 13rem;
+  }
+}
+
+.inset-right {
+  float: right;
+  align-items: flex-end;
+  margin-right: -6rem;
+  margin-left: 2.2rem;
+}
+
+.inset-left {
+  float: left;
+  align-items: flex-start;
+  margin-right: 2.2rem;
+  margin-left: -6rem;
+}
+
+.pull {
+  clear: both;
+  margin: 3.5rem -4rem;
+  padding: 2.2rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+  font-weight: 200;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 1000px) {
+  .inset-right { margin-right: 0; }
+  .inset-left { margin-left: 0; }
+
+  .pull {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .opening {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inset-right,
+  .inset-left {
+    float: none;
+    align-items: flex-end;
+    margin: 2rem 0;
+
+    .frame img { width: unquote("min(62vw, 260px)"); }
+  }
+}
+
+// The floor: every page ends on it, and it carries the footer links.
+.floor {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--floor-h);
+  padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+  border-top: 6px solid var(--skirting);
+  background: linear-gradient(var(--floor-1), var(--floor-2));
+  color: #2b2c2e;
+  font-size: 0.8rem;
+
+  // On narrow screens the line breaks after the name, never inside "All rights reserved".
+  .legal {
+    min-width: 0;
+    margin: 0;
+
+    span { white-space: nowrap; }
+  }
+
+  nav {
+    display: flex;
+    flex: none;
+    gap: 0.25rem;
+    margin-right: -9px;
+  }
+
+  // Icon links, with room around each icon for a thumb.
+  nav a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    opacity: 0.8;
+    transition: opacity 150ms ease, transform 150ms ease;
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Room: one album hung salon style. Horizontal on desktop and tablet, vertical on phones.
+
+.intro {
+  flex: none;
+  width: unquote("min(30rem, 80vw)");
+  container-type: inline-size;
+
+  // One size for every room, set so the longest room name fits the intro column.
+  h1 {
+    @extend %wall-title;
+
+    font-size: unquote("min(3.85rem, 12.5cqi)");
+  }
+
+  p {
+    max-width: 30ch;
+    margin-top: 1.5rem;
+    font-weight: 300;
+    font-size: 1.1rem;
+  }
+}
+
+.exit {
+  flex: none;
+
+  a {
+    display: block;
+    font-weight: 200;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 8px;
+    }
+  }
+
+  small {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--quiet);
+    font-weight: 400;
+    font-size: 0.875rem;
+    letter-spacing: 0;
+  }
+}
+
+// Before the script runs (or without it): a simple wrapping wall.
+.pieces {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+
+  > .frame {
+    --matw: 14px;
+
+    width: unquote("min(360px, 100%)");
+  }
+}
+
+.room {
+  padding: 96px var(--gutter) 48px;
+}
+
+.room.is-h {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  padding: 0;
+  overflow: auto hidden;
+  scrollbar-width: none;
+  cursor: grab;
+
+  &::-webkit-scrollbar { display: none; }
+  &.dragging { cursor: grabbing; user-select: none; }
+  &.dragging .frame { cursor: grabbing; }
+
+  .track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 100%;
+    padding: 64px 14vw calc(var(--floor-h) + 44px) var(--gutter);
+    background-image: radial-gradient(ellipse 13vw 44vh at 50% 0%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 72%);
+    background-repeat: repeat-x;
+    background-size: 26vw 100%;
+  }
+
+  .intro { margin-right: 7vw; }
+  .exit { margin-left: 9vw; width: unquote("min(26rem, 70vw)"); }
+
+  .pieces {
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .col {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.room.is-v {
+  .pieces {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+    margin: 2.5rem 0;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .exit { padding: 2rem 0 5rem; }
+}
+
+.room .col > .frame,
+.room .row > .frame {
+  transition: transform 200ms ease;
+
+  &:hover,
+  &:focus-visible { transform: translateY(-2px); }
+}
+
+// A sideways wall fills the screen, so its floor stays pinned to the bottom.
+body.walls-h {
+  overflow: hidden;
+
+  .floor {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--floor-h);
+    overflow: hidden;
+  }
+}
+
+// Room controls: position rail, count, auto-walk
+
+html:not(.js) .status,
+html:not(.js) .rail { display: none; }
+
+.status {
+  position: fixed;
+  z-index: 15;
+  right: var(--gutter);
+  bottom: calc(var(--floor-h) + 18px);
+  left: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--quiet);
+  font-size: 0.8rem;
+  pointer-events: none;
+
+  > * { pointer-events: auto; }
+}
+
+// The rail is a scrollbar: click to jump, drag the dark thumb to move.
+.rail {
+  position: fixed;
+  z-index: 16;
+  right: var(--gutter);
+  bottom: calc(var(--floor-h) - 4px);
+  left: var(--gutter);
+  height: 20px;
+  cursor: pointer;
+  touch-action: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  i {
+    position: absolute;
+    top: 8px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ink);
+    cursor: grab;
+    transition: top 150ms ease, height 150ms ease;
+  }
+
+  &:hover i,
+  &.dragging i {
+    top: 6px;
+    height: 7px;
+  }
+
+  &.dragging i { cursor: grabbing; }
+}
+
+// A top to bottom wall: the counter and auto-walk stay at the bottom of the screen while you scroll,
+// and come to rest just above the floor at the end, so they never cover the footer links.
+body.walls-v {
+  .status {
+    position: sticky;
+    bottom: 0;
+    padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+    background: linear-gradient(rgba(198, 199, 195, 0), rgba(198, 199, 195, 0.92) 40%);
+  }
+
+  .rail { display: none; }
+}
+
+.walk {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 12px 6px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.35);
+    color: var(--ink);
+    font-size: 0.8rem;
+
+    &::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8d9093;
+    }
+
+    &[aria-pressed="true"]::before { background: var(--ink); }
+  }
+
+  &.walking button::before { animation: walk-pulse 1.6s ease-in-out infinite; }
+}
+
+@keyframes walk-pulse {
+  50% { opacity: 0.25; }
+}
+
+// Hover label on the wall
+.tip {
+  position: fixed;
+  z-index: 25;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+
+  &.show { opacity: 1; }
+}
+
+// Closer look
+
+.closer {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 72px var(--gutter) 40px;
+  background: var(--wall);
+
+  &[hidden] { display: none; }
+
+  nav {
+    position: absolute;
+    top: 22px;
+    right: var(--gutter);
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.875rem;
+
+    button {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+  }
+
+  .frame {
+    --matw: 28px;
+
+    justify-self: center;
+    cursor: zoom-out;
+
+    img {
+      width: auto;
+      max-width: calc(100vw - 2 * var(--gutter) - 260px);
+      max-height: calc(100svh - 190px);
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .directory { grid-template-columns: 1fr; }
+
+  .top .rooms-link { display: inline; }
+
+  // The rooms menu on small screens. It opens between the header and the page, and the page
+  // moves down by the same amount (padding on main, so the wall background stays put).
+  .top nav {
+    position: absolute;
+    top: 100%;
+    right: var(--gutter);
+    left: var(--gutter);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    height: var(--menu-h, 0);
+    padding: 0 22px;
+    overflow: hidden;
+    visibility: hidden;
+    background: var(--plaque);
+    transition: height 300ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 300ms;
+
+    a {
+      padding: 12px 0;
+      color: #e9e9e5;
+      font-weight: 300;
+      font-size: 1.1rem;
+    }
+
+    a:first-child { padding-top: 16px; }
+    a:last-child { padding-bottom: 16px; }
+    a + a { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+
+    a:hover,
+    a[aria-current] {
+      color: #fff;
+      font-weight: 500;
+      text-decoration: none;
+    }
+  }
+
+  .top.is-open nav {
+    visibility: visible;
+    transition: height 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  body > main {
+    padding-top: var(--menu-push, 0);
+    transition: padding-top 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .room.is-h {
+    top: var(--menu-push, 0);
+    transition: top 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .closer {
+    grid-template-columns: 1fr;
+    align-content: center;
+    padding-top: 64px;
+
+    .frame {
+      --matw: 14px;
+
+      img {
+        max-width: calc(100vw - 2 * var(--gutter) - 40px);
+        max-height: 62svh;
+      }
+    }
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top nav,
+  .top.is-open nav,
+  body > main,
+  .room.is-h { transition: none; }
+
+  .room .col > .frame,
+  .room .row > .frame,
+  .rail i,
+  .tip { transition: none; }
+
+  .walk.walking button::before { animation: none; }
+}

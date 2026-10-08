@@ -1,5 +1,6 @@
 ---
 description: Pieces created leveraging datamoshing/databending techniques.
+medium: Datamoshed photograph
 featured_image: 006_redmond-center-simple-echo-delay-0.3-decay-0.1.jpg
 menus: "main"
 sort_by: Name # Exif.Date

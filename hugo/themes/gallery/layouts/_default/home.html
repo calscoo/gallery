@@ -1,9 +1,23 @@
+{{ define "bodyclass" }}home{{ end }}
 {{ define "main" }}
-  {{ partial "title.html" . }}
-  {{ partial "featured.html" . }}
-  <section class="galleries">
-    {{ range where .Pages "Params.private" "ne" true }}
-      {{ partial "album-card.html" . }}
-    {{ end }}
+  {{ $rooms := partialCached "rooms.html" . "rooms" }}
+  <section class="lobby" id="rooms">
+    <div class="lobby-intro">
+      <h1>{{ replace site.Title "." "<br>." | safeHTML }}</h1>
+      {{ with .Params.intro | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
+    </div>
+    <nav class="lobby-hang" id="lobby" aria-label="Rooms">
+      {{ range $room := $rooms }}
+        {{ with partial "featured-image.html" $room }}
+          {{ $p := partial "piece.html" (dict "image" . "page" $room) }}
+          <a class="lobby-item" href="{{ $room.RelPermalink }}" data-slug="{{ $p.slug }}">
+            <span class="frame f-black">
+              <img src="{{ $p.wall.RelPermalink }}" width="{{ $p.wall.Width }}" height="{{ $p.wall.Height }}" alt="{{ $room.Title }}: {{ $p.title }}" style="background-color: {{ $p.color }}" />
+            </span>
+            <span class="plate"><b>{{ $room.Title }}</b> <span>{{ len ($room.Resources.ByType "image") }} works</span></span>
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
   </section>
 {{ end }}

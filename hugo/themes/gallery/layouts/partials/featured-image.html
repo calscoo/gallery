@@ -1,0 +1,7 @@
+{{- /* An album's cover: featured_image from front matter, a file with "feature" in its name, or the first image. */ -}}
+{{- $images := .Resources.ByType "image" -}}
+{{- $img := "" -}}
+{{- with $images -}}
+  {{- $img = ($images.GetMatch ($.Params.featured_image | default "*feature*")) | default (index $images 0) -}}
+{{- end -}}
+{{- return $img -}}

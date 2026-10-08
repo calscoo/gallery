@@ -1,0 +1,15 @@
+{{- /* Contact plaque, in the style of the rooms plaque. */ -}}
+{{- $rooms := partialCached "rooms.html" . "rooms" -}}
+<div class="plaque contact">
+  <h2>Prints and collaborations</h2>
+  <p>Interested in a print, a project, or a collaboration? Get in touch.</p>
+  <ol>
+    {{- with site.Params.author.email }}
+    <li><a href="mailto:{{ . }}">Email<span>{{ . }}</span></a></li>
+    {{- end }}
+    {{- with site.Params.socialIcons.instagram }}
+    <li><a href="{{ . }}" target="_blank" rel="noopener">Instagram<span>@{{ path.Base (strings.TrimSuffix "/" .) }}</span></a></li>
+    {{- end }}
+    <li><a href="{{ site.Home.RelPermalink }}">Walk the rooms<span>{{ len $rooms }} rooms</span></a></li>
+  </ol>
+</div>

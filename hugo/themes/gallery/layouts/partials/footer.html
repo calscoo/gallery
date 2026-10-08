@@ -1,12 +1,24 @@
-<footer>
-  {{ partialCached "social-icons.html" . }}
-  <section>
-    © {{ now.Format "2006" }} {{ .Site.Params.author.name }} - Hugo-built, Amplify-deployed, Terraform-provisioned on
-    AWS.
-    {{ range .Site.Menus.footer }}
-    <a {{ with .Params.rel -}}rel="{{ . }}" {{ end -}} href="{{ .URL }}">
-      {{ .Name }}
+{{- $now := now.Format "2006" | int -}}
+{{- $since := site.Params.copyrightSince | default $now | int -}}
+<footer class="floor">
+  <p class="legal"><span>© {{ if lt $since $now }}{{ $since }}–{{ end }}{{ $now }} {{ site.Params.author.name }}.</span> <span>All rights reserved.</span></p>
+  <nav aria-label="Elsewhere">
+    {{- with site.Params.socialIcons.instagram }}
+    <a href="{{ . }}" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.3" cy="6.7" r="0.7" fill="currentColor" stroke="none" />
+      </svg>
     </a>
-    {{ end }}
-  </section>
+    {{- end }}
+    {{- with site.Params.author.email }}
+    <a href="mailto:{{ . }}" aria-label="Email {{ site.Params.author.name }}" title="{{ . }}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="5.5" width="18" height="13" rx="1.5" />
+        <path d="m3.6 6.6 8.4 6.4 8.4-6.4" />
+      </svg>
+    </a>
+    {{- end }}
+  </nav>
 </footer>

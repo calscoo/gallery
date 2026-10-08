@@ -1,0 +1,11 @@
+{{- /*
+  A framed self-portrait hung in the text, with a wall label.
+  {{< portrait src="images/caleb2.jpg" side="right" finish="white" alt="..." >}}
+  side: right (default) or left. finish: black (default), white or thin.
+*/ -}}
+{{- $side := .Get "side" | default "right" -}}
+{{- $finish := .Get "finish" | default "black" -}}
+<figure class="inset inset-{{ $side }}">
+  <span class="frame f-{{ $finish }}"><img src="{{ .Get "src" | relURL }}" alt="{{ .Get "alt" }}" width="400" height="400" loading="lazy" /></span>
+  <figcaption class="card"><h3>{{ .Get "title" | default "Self-portrait" }}</h3>{{ .Get "caption" | default site.Params.author.name }}</figcaption>
+</figure>

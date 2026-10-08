@@ -4,13 +4,15 @@ enableRobotsTXT = true
 languageCode = "en"
 timeZone = "Europe/Berlin"
 timeout = "120s"
-title = "Gallery"
+title = "calebolson.media"
 theme = "gallery"
 
 [params]
   defaultTheme = "dark"
-  description = "Example site for hugo-theme-gallery"
-  title = "My Gallery"
+  description = "Photography and digital art by Caleb Olson."
+  title = "calebolson.media"
+  # First year of published work, for the copyright line in the footer.
+  copyrightSince = 2017
   [params.author]
     email = "calebolson.media@gmail.com"
     name = "Caleb Olson"
