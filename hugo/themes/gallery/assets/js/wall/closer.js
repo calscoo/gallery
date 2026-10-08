@@ -1,7 +1,7 @@
 import { cardHTML } from "./util.js";
 
 // Closer look: one piece large with its label. The URL hash names the piece, so a link can open it directly.
-// Opening a piece adds one history entry, so Back (browser, mouse or swipe) returns to the wall.
+// Opening a piece adds one history entry, so Back (browser, mouse, or swipe) returns to the wall.
 // Moving to the previous or next piece updates that entry instead of adding more.
 export function makeCloser({ box, room, frames, onClose }) {
   const img = box.querySelector(".frame img");

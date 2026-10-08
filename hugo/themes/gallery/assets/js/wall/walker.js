@@ -1,6 +1,6 @@
 import { reduced, store } from "./util.js";
 
-// Run fn once the page is visible, finished loading and painted. Gives up waiting on the load after 8 seconds.
+// Run fn once the page is visible, finished loading, and painted. Gives up waiting on the load after 8 seconds.
 function whenShown(fn) {
   let done = false;
   const paint = () => { if (!done) { done = true; requestAnimationFrame(() => requestAnimationFrame(fn)); } };
@@ -50,7 +50,7 @@ export class Walker {
 
     // Arriving in a room counts as the start of inactivity, but only once the room is on screen.
     // Browsers can load the next page in the background (prerender, or a hidden tab) and run its
-    // scripts early, so the clock waits for the page to be shown, loaded and painted.
+    // scripts early, so the clock waits for the page to be shown, loaded, and painted.
     addEventListener("visibilitychange", () => {
       if (document.hidden) { this.stop(); this.cancelEnd(); clearTimeout(this.timer); }
       else this.arm();

@@ -4,7 +4,7 @@ import { finishOf, spec } from "./util.js";
 // Wide screens get stacks (the first room alone and largest). Phones and portrait tablets get rows
 // that keep each cover's proportions, with the first room on top and nearly full width.
 const G = 30; // gap between frames in a stack
-const LABEL = 48; // height of a label (name, count and the space above them)
+const LABEL = 48; // height of a label (name, count, and the space above them)
 const ROWS = matchMedia("(max-width: 699px), (max-height: 499px) and (pointer: coarse), (orientation: portrait) and (max-width: 1100px)");
 
 export function initHome() {
@@ -39,7 +39,7 @@ export function initHome() {
     it.img.style.height = ih + "px";
   }
 
-  // Width of a stack whose frames, labels and gaps add up to height H.
+  // Width of a stack whose frames, labels, and gaps add up to height H.
   function stackWidth(group, H) {
     let A = 0, C = 0;
     for (const it of group) { A += (1 - 2 * it.f) / it.r + 2 * it.f; C += 2 * it.b * (1 - 1 / it.r); }
