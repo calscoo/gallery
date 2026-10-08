@@ -32,4 +32,4 @@ Finally, one night while processing some images in Photoshop, I mistakenly layer
 
 My work refuses to be confined, neatly labeled, or categorized. This defiance, this refusal to conform, was the fire that fueled my journey. It's the essence of my art, and will remain a source of profound pride and fulfillment in my life.
 
-Please enjoy my gallery while you're here, and don't hesitate to reach out if you'd like to collaborate on a project or have an interest in purchasing a particular piece!
+Please enjoy my gallery while you're here, and don't hesitate to reach out if you'd like to collaborate on a project or have an interest in purchasing a particular piece.
