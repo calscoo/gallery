@@ -72,9 +72,11 @@ export function initHome() {
       const others = sizes.slice(1);
       const mean = sizes.reduce((a, b) => a + b, 0) / sizes.length;
       const otherMean = others.reduce((a, b) => a + b, 0) / others.length;
-      // The first room should read as the hero: about twice the size of the others.
+      // The first room should read as the hero: about twice the size of the others,
+      // and clearly larger than any one of them.
       const hero = Math.min(1, sizes[0] / (2 * otherMean)) ** 1.5;
-      const score = mean * Math.sqrt(Math.min(...others) / mean) * hero;
+      const largest = sizes[0] >= 1.3 * Math.max(...others) ? 1 : 0.2;
+      const score = mean * Math.sqrt(Math.min(...others) / mean) * hero * largest;
       if (!best || score > best.score) best = { groups, widths, k, score };
     }
     for (const [gi, g] of best.groups.entries()) {
