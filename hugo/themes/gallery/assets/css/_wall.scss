@@ -542,11 +542,13 @@ hgroup,
   .inset-right,
   .inset-left {
     float: none;
-    align-items: flex-end;
     margin: 2rem 0;
 
     .frame img { width: unquote("min(62vw, 260px)"); }
   }
+
+  .inset-right { align-items: flex-end; }
+  .inset-left { align-items: flex-start; }
 }
 
 // The floor: every page ends on it, and it carries the footer links.
