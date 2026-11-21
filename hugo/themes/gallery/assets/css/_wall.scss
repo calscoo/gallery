@@ -99,13 +99,17 @@ button {
 
 // Frames and labels
 
+// The moulding casts a soft shadow down onto the mat. It is sized by the mat, so it scales with
+// the frame. The print sits flat on the mat, so it casts no shadow.
 .frame {
+  --lip: inset 0 calc(var(--matw, 22px) * 0.7) calc(var(--matw, 22px) * 1.1) calc(var(--matw, 22px) * -0.6) rgba(0, 0, 0, 0.3);
+
   display: block;
   flex: none;
   padding: var(--matw, 22px);
   border: 9px solid var(--frame);
   background: var(--mat);
-  box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.18), var(--lip);
   cursor: zoom-in;
   -webkit-user-drag: none;
 
@@ -117,10 +121,13 @@ button {
 
   &.f-white {
     border-color: var(--frame-white);
-    box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.14), inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 26px 34px -22px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.14), inset 0 0 0 1px rgba(0, 0, 0, 0.08), var(--lip);
   }
 
+  // No mat, so no shadow on it.
   &.f-thin {
+    --lip: 0 0 transparent;
+
     padding: 0;
     border-width: 4px;
   }
