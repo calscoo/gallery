@@ -1,10 +1,12 @@
-import { cardHTML } from "./util.js";
+import { cardHTML, finishOf } from "./util.js";
 
-// Closer look: one piece large with its label. The URL hash names the piece, so a link can open it directly.
+// Closer look: one piece large with its label, in the same frame finish it has on the wall.
+// The URL hash names the piece, so a link can open it directly.
 // Opening a piece adds one history entry, so Back (browser, mouse, or swipe) returns to the wall.
 // Moving to the previous or next piece updates that entry instead of adding more.
 export function makeCloser({ box, room, frames, onClose }) {
-  const img = box.querySelector(".frame img");
+  const frame = box.querySelector(".frame");
+  const img = frame.querySelector("img");
   const card = box.querySelector(".card");
   let idx = 0;
   let opener = null;
@@ -33,6 +35,7 @@ export function makeCloser({ box, room, frames, onClose }) {
   function show(i) {
     idx = i;
     const f = frames[idx];
+    frame.className = "frame f-" + finishOf(f.dataset.slug);
     img.width = +f.dataset.fw;
     img.height = +f.dataset.fh;
     img.alt = f.dataset.title;
