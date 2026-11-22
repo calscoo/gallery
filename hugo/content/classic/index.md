@@ -1,7 +1,7 @@
 ---
 description: Stand alone pieces representing a more classic style of photography.
 medium: Photograph
-featured_image: 057_DSCF4601.jpg
+featured_image: 059_DSCF4915.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc

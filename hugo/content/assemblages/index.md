@@ -1,7 +1,7 @@
 ---
 description: Unique assemblages comprised of various assets all captured or created by yours truly.
 medium: Assemblage
-featured_image: 056_DSCF4086.jpg
+featured_image: 060_DSCF4522.jpg
 menus: "main"
 sort_by: Name # Exif.Date
 sort_order: desc
